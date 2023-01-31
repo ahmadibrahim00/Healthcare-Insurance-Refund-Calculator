@@ -2,7 +2,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -36,14 +35,16 @@ public class JSONHash {
         pw.write(jsonobj.toJSONString());
     }
 
-    public Object objClient() throws ParseException {
+    public long objClient() throws ParseException {
         String client = (String) jsonobj.get("client");
-        return client;
+        Long numclient = Long.valueOf(client);
+        return numclient;
     }
     public Object objContrat() throws ParseException
     {
         String contrat = (String) jsonobj.get("contrat");
-        return contrat;
+        char lettrecontrat = contrat.charAt(0);
+        return lettrecontrat;
     }
     public Object objMois() throws ParseException{
         String mois = (String) jsonobj.get("mois");
@@ -56,10 +57,9 @@ public class JSONHash {
         {
             List<Object> array = new ArrayList<Object>();
             JSONObject reclamation = (JSONObject) arA;
-            array.add(reclamation.get("soin"));
-            System.out.println(array);
+            long soin = (Long) reclamation.get("soin");
+            array.add(soin);
         }
-
         }
     public void getDate()
     {
@@ -68,8 +68,8 @@ public class JSONHash {
         {
             List<Object> array = new ArrayList<Object>();
             JSONObject reclamation = (JSONObject) arA;
-            array.add(reclamation.get("date"));
-            System.out.println(array);
+            String date = (String) reclamation.get("date");
+            array.add(date);
         }
 
     }
@@ -78,12 +78,15 @@ public class JSONHash {
         JSONArray reclamations = (JSONArray) jsonobj.get("reclamations");
         for (Object arA: reclamations)
         {
-            List<Object> array = new ArrayList<Object>();
+            ArrayList<Object> array = new ArrayList<Object>();
             JSONObject reclamation = (JSONObject) arA;
-            array.add(reclamation.get("montant"));
-            System.out.println(array);
+            String montant = (String) reclamation.get("montant");
+            String montantparsed = montant.replaceAll("[$,]", "");
+            Float montantfinal = Float.valueOf(montantparsed);
+            array.add(montantfinal);
         }
+    }
 
     }
-    }
+
 

@@ -8,6 +8,8 @@ public class Main {
         JSONHash JSON = new JSONHash("Assurance.json", "resultat.json");
 
         JSON.load();
+        JSON.objClient();
+        JSON.objContrat();
         JSON.getSoin();
         JSON.getDate();
         JSON.getMontant();
