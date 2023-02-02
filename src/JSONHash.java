@@ -34,23 +34,24 @@ public class JSONHash {
         pw.write(jsonobj.toJSONString());
     }
 
-    public long objClient() throws ParseException {
+    public long objClient()
+    {
         String client = (String) jsonobj.get("client");
         Long numclient = Long.valueOf(client);
-        System.out.println(numclient);
         return numclient;
     }
-    public Object objContrat() throws ParseException
+    public Object objContrat()
     {
         String contrat = (String) jsonobj.get("contrat");
         char lettrecontrat = contrat.charAt(0);
         return lettrecontrat;
     }
-    public Object objMois() throws ParseException{
+    public Object objMois()
+    {
         String mois = (String) jsonobj.get("mois");
         return mois;
     }
-    public ArrayList<Long> getSoin()
+    public Long getSoin(int i)
     {
         JSONArray reclamations = (JSONArray) jsonobj.get("reclamations");
         ArrayList<Long> array = new ArrayList<Long>();
@@ -60,9 +61,9 @@ public class JSONHash {
             Long soin = (Long) reclamation.get("soin");
             array.add(soin);
         }
-        return array;
+        return array.get(i);
     }
-    public ArrayList<String> getDate()
+    public String getDate(int i)
     {
         JSONArray reclamations = (JSONArray) jsonobj.get("reclamations");
         ArrayList<String> array = new ArrayList<String>();
@@ -72,9 +73,9 @@ public class JSONHash {
             String date = (String) reclamation.get("date");
             array.add(date);
         }
-        return array;
+        return array.get(i);
     }
-    public ArrayList<Float> getMontant()  {
+    public Float getMontant(int i)  {
         JSONArray reclamations = (JSONArray) jsonobj.get("reclamations");
         ArrayList<Float> array = new ArrayList<>();
         for (Object arA: reclamations)
@@ -85,7 +86,7 @@ public class JSONHash {
             Float montantfinal = Float.valueOf(montantparsed);
             array.add(montantfinal);
         }
-        return array;
+        return array.get(i);
         }
     }
 

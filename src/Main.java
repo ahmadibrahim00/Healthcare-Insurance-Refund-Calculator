@@ -10,9 +10,9 @@ public class Main {
         JSON.load();
         JSON.objClient();
         JSON.objContrat();
-        JSON.getSoin();
-        JSON.getDate();
-        JSON.getMontant();
+        JSON.getSoin(0);
+        JSON.getDate(0);
+        JSON.getMontant(0);
         JSON.save();
     }
 }
