@@ -34,19 +34,19 @@ public class JSONHash {
         pw.write(jsonobj.toJSONString());
     }
 
-    public long objClient()
+    public long getNumClient()
     {
         String client = (String) jsonobj.get("client");
         Long numclient = Long.valueOf(client);
         return numclient;
     }
-    public Object objContrat()
+    public char getContrat()
     {
         String contrat = (String) jsonobj.get("contrat");
         char lettrecontrat = contrat.charAt(0);
         return lettrecontrat;
     }
-    public Object objMois()
+    public String getMois()
     {
         String mois = (String) jsonobj.get("mois");
         return mois;
