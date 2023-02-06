@@ -1,22 +1,22 @@
 public class Soin {
+    protected long client;
+    protected char typeContrat;
+    protected String dateReclamation;
     protected long numeroSoin;
     protected String dateSoin;
     protected double prixSoin;
-    protected char typeContrat;
-    protected long client;
-    protected String dateReclamation;
 
     public Soin() {
     }
 
-    public Soin(long numeroSoin, String dateSoin, double prixSoin,
-                char typeContrat, long client, String dateReclamation) {
+    public Soin(long client, char typeContrat, String dateReclamation,
+                long numeroSoin, String dateSoin, double prixSoin) {
+        this.client = client;
+        this.typeContrat = typeContrat;
+        this.dateReclamation = dateReclamation;
         this.numeroSoin = numeroSoin;
         this.dateSoin = dateSoin;
         this.prixSoin = prixSoin;
-        this.typeContrat = typeContrat;
-        this.client = client;
-        this.dateReclamation = dateReclamation;
     }
 
     /**
