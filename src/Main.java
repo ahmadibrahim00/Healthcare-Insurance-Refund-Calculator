@@ -17,24 +17,23 @@ public class Main {
         JSON.getMontant(0);
         JSON.save();
 
-        ArrayList<Soin> listeSoins = new ArrayList<>();
-
+        ArrayList<Soin> reclamation = new ArrayList<>();
         //Creation du arraylist avec des objets Soin avec tous leurs attributs
         //TODO la condition doit etre "i < JSON.getNombreReclamations()" au lieu de "i < 3"
         for (int i = 0; i < 3 ; i++) {
-            listeSoins.add(new Soin(JSON.getSoin(i), JSON.getDate(i), JSON.getMontant(i),
-                JSON.getContrat(), JSON.getNumClient(), JSON.getMois()));
+            reclamation.add(new Soin(JSON.getNumClient(), JSON.getContrat(), JSON.getMois(),
+                    JSON.getSoin(i), JSON.getDate(i), JSON.getMontant(i)));
         }
 
-        //Test temporaire pour voir si les loops fonctionnent
-        for (int i = 0; i < listeSoins.size(); i++){
-            System.out.println(listeSoins.get(i).getNumeroSoin());
-        }
-        
-        //Test temporaire pour voir si le calcul de remboursement fonctionne
-        for (int i = 0; i < listeSoins.size(); i++){
-            System.out.println(listeSoins.get(i).calculerRemboursement());
-        }
+        ArrayList<Soin> soinsRembourses = new ArrayList<>();
+         for (int i = 0; i < reclamation.size() ; i++) {
+             soinsRembourses.add(new Soin(reclamation.get(i).getClient(),
+                     reclamation.get(i).getTypeContrat(), reclamation.get(i).getDateReclamation(),
+                     reclamation.get(i).getNumeroSoin(), reclamation.get(i).getDateSoin(),
+                     reclamation.get(i).calculerRemboursement()));
+         }
 
+         Remboursement remboursement = new Remboursement(soinsRembourses.get(0).getClient(),
+                     soinsRembourses.get(0).getDateReclamation(), soinsRembourses);
     }
 }
