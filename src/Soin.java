@@ -19,32 +19,39 @@ public class Soin {
         this.dateReclamation = dateReclamation;
     }
 
-    boolean soinEstMassotherapie(){
+    boolean soinEstMassotherapie() {
         return numeroSoin == 0;
     }
-    boolean soinEstOstheotherapie(){
+
+    boolean soinEstOstheotherapie() {
         return numeroSoin == 100;
     }
-    boolean soinEstPsychologieIndividuelle(){
+
+    boolean soinEstPsychologieIndividuelle() {
         return numeroSoin == 200;
     }
-    boolean soinEstSoinsDentaires(){
+
+    boolean soinEstSoinsDentaires() {
         return numeroSoin >= 300 && numeroSoin <= 399;
     }
-    boolean soinEstNaturopathieAcuponcture(){
+
+    boolean soinEstNaturopathieAcuponcture() {
         return numeroSoin == 400;
     }
-    boolean soinEstChiropratie(){
+
+    boolean soinEstChiropratie() {
         return numeroSoin == 500;
     }
-    boolean soinEstPhysiotherapie(){
+
+    boolean soinEstPhysiotherapie() {
         return numeroSoin == 600;
     }
-    boolean soinEstOrthophonieErgotherapie(){
-        return  numeroSoin == 700;
+
+    boolean soinEstOrthophonieErgotherapie() {
+        return numeroSoin == 700;
     }
 
-    double obtenirPourcentagesContratA(){
+    double obtenirPourcentagesContratA() {
         double pourcentage = 0;
         if (soinEstMassotherapie() || soinEstOstheotherapie()
                 || soinEstPsychologieIndividuelle() || soinEstChiropratie()) pourcentage = 0.25;
@@ -54,7 +61,7 @@ public class Soin {
         return pourcentage;
     }
 
-    double obtenirPourcentagesContratB(){
+    double obtenirPourcentagesContratB() {
         double pourcentage = 0;
         if (soinEstSoinsDentaires() || soinEstMassotherapie()
                 || soinEstOstheotherapie() || soinEstChiropratie()) pourcentage = 0.50;
@@ -64,7 +71,7 @@ public class Soin {
         return pourcentage;
     }
 
-    double obtenirPourcentagesContratC(){
+    double obtenirPourcentagesContratC() {
         return 0.90;
     }
 
@@ -72,11 +79,11 @@ public class Soin {
         return 1.00;
     }
 
-    double obtenirMaxSelonContratA(){
+    double obtenirMaxSelonContratA() {
         return -1;
     }
 
-    double obtenirMaxSelonContratB(){
+    double obtenirMaxSelonContratB() {
         double max = -1;
         if (soinEstMassotherapie()) max = 40.0;
         else if (soinEstOstheotherapie() || soinEstChiropratie()) max = 50.0;
@@ -84,11 +91,11 @@ public class Soin {
         return max;
     }
 
-    double obtenirMaxSelonContratC(){
+    double obtenirMaxSelonContratC() {
         return -1;
     }
 
-    double obtenirMaxSelonContratD(){
+    double obtenirMaxSelonContratD() {
         double max = -1;
         if (soinEstMassotherapie()) max = 85.0;
         else if (soinEstOstheotherapie() || soinEstChiropratie()) max = 75.0;
@@ -99,32 +106,32 @@ public class Soin {
     }
 
     double obtenirPourcentageSelonContratActif() {
-                return switch (typeContrat) {
-                    case 'A' -> obtenirPourcentagesContratA();
-                    case 'B' -> obtenirPourcentagesContratB();
-                    case 'C' -> obtenirPourcentagesContratC();
-                    case 'D' -> obtenirPourcentagesContratD();
-                    default -> 0.00;
-                };
+        return switch (typeContrat) {
+            case 'A' -> obtenirPourcentagesContratA();
+            case 'B' -> obtenirPourcentagesContratB();
+            case 'C' -> obtenirPourcentagesContratC();
+            case 'D' -> obtenirPourcentagesContratD();
+            default -> 0.00;
+        };
     }
 
-    double trouverMax(){
-        return switch (typeContrat){
+    double trouverMax() {
+        return switch (typeContrat) {
             case 'A' -> obtenirMaxSelonContratA();
             case 'B' -> obtenirMaxSelonContratB();
             case 'C' -> obtenirMaxSelonContratC();
             case 'D' -> obtenirMaxSelonContratD();
-            default  -> -1;
+            default -> -1;
         };
     }
 
-    boolean maxExiste(){
+    boolean maxExiste() {
         return !(trouverMax() == -1);
     }
 
-    double calculerRemboursement(){
+    double calculerRemboursement() {
         double montantRembourse;
-        if ( maxExiste() && (obtenirPourcentageSelonContratActif() * prixSoin >= trouverMax()) ){
+        if (maxExiste() && (obtenirPourcentageSelonContratActif() * prixSoin >= trouverMax())) {
             montantRembourse = trouverMax();
         } else {
             montantRembourse = obtenirPourcentageSelonContratActif() * prixSoin;
