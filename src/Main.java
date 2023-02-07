@@ -15,6 +15,7 @@ public class Main {
         JSON.getSoin(1);
         JSON.getDate(0);
         JSON.getMontant(0);
+        JSON.getNbSoin();
         JSON.save();
 
         ArrayList<Soin> reclamation = new ArrayList<>();

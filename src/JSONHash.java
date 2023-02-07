@@ -32,6 +32,9 @@ public class JSONHash {
     public void save() throws FileNotFoundException {
         PrintWriter pw = new PrintWriter(resultat);
         pw.write(jsonobj.toJSONString());
+
+        pw.flush();
+        pw.close();
     }
 
     public long getNumClient()
@@ -63,6 +66,18 @@ public class JSONHash {
         }
         return array.get(i);
     }
+    public int getNbSoin()
+    {
+        JSONArray reclamations = (JSONArray) jsonobj.get("reclamations");
+        int cpt_album = 0;
+        for (Object arA: reclamations)
+        {
+            JSONObject reclamation = (JSONObject) arA;
+            Long soin = (Long) reclamation.get("soin");
+            cpt_album += 1;
+        }
+        return cpt_album;
+    }
     public String getDate(int i)
     {
         JSONArray reclamations = (JSONArray) jsonobj.get("reclamations");
@@ -88,6 +103,7 @@ public class JSONHash {
         }
         return array.get(i);
         }
+
     }
 
 
