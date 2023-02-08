@@ -20,6 +20,18 @@ public class JSONHash {
         this.jsonobj = null;
     }
 
+    public String getFilename() {
+        return filename;
+    }
+
+    public String getResultat() {
+        return resultat;
+    }
+
+    public JSONObject getJsonobj() {
+        return jsonobj;
+    }
+
     public void load() throws IOException, ParseException {
         try {
             Object obj = new JSONParser().parse(new FileReader(filename));
