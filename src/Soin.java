@@ -5,9 +5,15 @@ public class Soin {
     protected long numeroSoin;
     protected String dateSoin;
     protected double prixSoin;
+    private static double compteurMasso;
+    private static double compteurOsteo;
+    private static double compteurPsycho;
+    private static double compteurDentaire;
+    private static double compteurNaturoAcu;
+    private static double compteurChiro;
+    private static double compteurPhysio;
+    private static double compteurOrthoErgo;
 
-    public Soin() {
-    }
 
     public Soin(long client, char typeContrat, String dateReclamation,
                 long numeroSoin, String dateSoin, double prixSoin) {
@@ -21,57 +27,72 @@ public class Soin {
 
     /**
      * Determine si l'instance de soin a le numero de soin de massotherapie.
+     *
      * @return vrai si le soin a le numero de soin de massotherapie, faux dans le cas contraire.
      */
     private boolean estMassotherapie() {
         return numeroSoin == 0;
     }
+
     /**
      * Determine si l'instance de soin a le numero de soin d'osteopatie.
+     *
      * @return vrai si le soin a le numero de soin d'osteopatie, faux dans le cas contraire.
      */
     private boolean estOsteopatie() {
         return numeroSoin == 100;
     }
+
     /**
      * Determine si l'instance de soin a le numero de soin de psychologie individuelle.
-     * @return vrai si le soin a le numero de soin de psychologie individuelle, 
+     *
+     * @return vrai si le soin a le numero de soin de psychologie individuelle,
      * faux dans le cas contraire.
      */
     private boolean estPsychologieIndividuelle() {
         return numeroSoin == 200;
     }
+
     /**
      * Determine si l'instance de soin a le numero de soin dentaire.
+     *
      * @return vrai si le soin a le numero de soin dentaire, faux dans le cas contraire.
      */
     private boolean estSoinsDentaires() {
         return numeroSoin >= 300 && numeroSoin <= 399;
     }
+
     /**
      * Determine si l'instance de soin a le numero de soin de naturopatie ou d'acuponcture.
+     *
      * @return vrai si le soin a le numero de soin de naturopatie ou d'acuponcture,
      * faux dans le cas contraire
      */
     private boolean estNaturopatieAcuponcture() {
         return numeroSoin == 400;
     }
+
     /**
      * Determine si l'instance de soin a le numero de soin de chiropratie.
+     *
      * @return vrai si le soin a le numero de soin de chiropratie, faux dans le cas contraire.
      */
     private boolean estChiropratie() {
         return numeroSoin == 500;
     }
+
     /**
      * Determine si l'instance de soin a le numero de soin de physiotherapie.
+     *
      * @return vrai si le soin a le numero de soin de physiotherapie, faux dans le cas contraire.
      */
     private boolean estPhysiotherapie() {
         return numeroSoin == 600;
     }
+
     /**
      * Determine si l'instance de soin a le numero de soin d'orthophonie ou d'ergotherapie.
+     *
      * @return vrai si le soin a le numero de soin d'orthophonie ou d'ergotherapie,
      * faux dans le cas contraire.
      */
@@ -82,6 +103,7 @@ public class Soin {
     /**
      * Permet d'obtenir le pourcentage parmi les pourcentages
      * correspondant au contrat A en fonction du type de soin.
+     *
      * @return le pourcentage en fonction du contrat A.
      */
     private double obtenirPourcentagesContratA() {
@@ -93,9 +115,11 @@ public class Soin {
         else if (estPhysiotherapie()) pourcentage = 0.40;
         return pourcentage;
     }
+
     /**
      * Permet d'obtenir le pourcentage parmi les pourcentages
      * correspondant au contrat B en fonction du type de soin.
+     *
      * @return le pourcentage en fonction du contrat B.
      */
     private double obtenirPourcentagesContratB() {
@@ -107,33 +131,41 @@ public class Soin {
         else if (estOrthophonieErgotherapie()) pourcentage = 0.70;
         return pourcentage;
     }
+
     /**
      * Permet d'obtenir le pourcentage parmi les pourcentages
      * correspondant au contrat C en fonction du type de soin.
+     *
      * @return le pourcentage en fonction du contrat C.
      */
     private double obtenirPourcentagesContratC() {
         return 0.90;
     }
+
     /**
      * Permet d'obtenir le pourcentage parmi les pourcentages
      * correspondant au contrat D en fonction du type de soin.
+     *
      * @return le pourcentage en fonction du contrat D.
      */
     private double obtenirPourcentagesContratD() {
         return 1.00;
     }
+
     /**
      * Permet d'obtenir le maximum parmi les maximums
      * correspondant au contrat A en fonction du type de soin.
+     *
      * @return le maximum en fonction du contrat A.
      */
     private double obtenirMaxSelonContratA() {
         return -1;
     }
+
     /**
      * Permet d'obtenir le maximum parmi les maximums
      * correspondant au contrat B en fonction du type de soin.
+     *
      * @return le maximum en fonction du contrat B.
      */
     private double obtenirMaxSelonContratB() {
@@ -143,17 +175,21 @@ public class Soin {
         else if (estPsychologieIndividuelle()) max = 70.0;
         return max;
     }
+
     /**
      * Permet d'obtenir le maximum parmi les maximums
      * correspondant au contrat C en fonction du type de soin.
+     *
      * @return le maximum en fonction du contrat C.
      */
     private double obtenirMaxSelonContratC() {
         return -1;
     }
+
     /**
      * Permet d'obtenir le maximum parmi les maximums
      * correspondant au contrat D en fonction du type de soin.
+     *
      * @return le maximum en fonction du contrat D.
      */
     private double obtenirMaxSelonContratD() {
@@ -168,6 +204,7 @@ public class Soin {
 
     /**
      * Permet d'obtenir le pourcentage selon le type de contrat associe a la reclamation.
+     *
      * @return le pourcentage remboursable.
      */
     private double obtenirPourcentageSelonContratActif() {
@@ -179,8 +216,10 @@ public class Soin {
             default -> 0.00;
         };
     }
+
     /**
      * Permet d'obtenir le maximum selon le type de contrat associe a la reclamation.
+     *
      * @return le maximum remboursable.
      */
     private double trouverMax() {
@@ -195,6 +234,7 @@ public class Soin {
 
     /**
      * Determine si un maximum est associe a ce soin de la reclamation.
+     *
      * @return Vrai si le contrat admet un maximum, faux sinon.
      */
     private boolean maxExiste() {
@@ -202,18 +242,66 @@ public class Soin {
     }
 
     /**
-     * Permet d'ontenir le montant qui doit etre rembourse selon
-     * le pourcentage approprie et du maximum determie, s'il y en a un.
-     * @return le montant remboursable pour le soin.
+     * TODO
+     * @return
      */
-    public double calculerRemboursement() {
-        double montantRembourse;
-        if (maxExiste() && (obtenirPourcentageSelonContratActif() * prixSoin >= trouverMax())) {
-            montantRembourse = trouverMax();
+    public double calculerMontantAvantMax() {
+        double montantAvantMax;
+        montantAvantMax = obtenirPourcentageSelonContratActif() * prixSoin;
+        return montantAvantMax;
+    }
+
+    /**
+     *TODO
+     */
+    void cumulerSoinsAPayer(){
+        if(estMassotherapie()) compteurMasso = compteurMasso + calculerMontantAvantMax();
+        if(estMassotherapie()) compteurOsteo = compteurOsteo + calculerMontantAvantMax();
+        if(estMassotherapie()) compteurPsycho = compteurPsycho + calculerMontantAvantMax();
+        if(estMassotherapie()) compteurDentaire = compteurDentaire + calculerMontantAvantMax();
+        if(estMassotherapie()) compteurNaturoAcu = compteurNaturoAcu + calculerMontantAvantMax();
+        if(estMassotherapie()) compteurChiro = compteurChiro + calculerMontantAvantMax();
+        if(estMassotherapie()) compteurPhysio = compteurPhysio + calculerMontantAvantMax();
+        if(estMassotherapie()) compteurOrthoErgo = compteurOrthoErgo + calculerMontantAvantMax();
+    }
+
+    /**
+     * TODO
+     * @return
+     */
+    double calculerRemboursement(){
+        double montantRembourse = 0;
+        if (maxExiste() && choisirCompteur() + calculerMontantAvantMax() <= trouverMax()){
+            montantRembourse = calculerMontantAvantMax();
+        } else if (maxExiste()){
+            montantRembourse = trouverMax() - choisirCompteur();
         } else {
-            montantRembourse = obtenirPourcentageSelonContratActif() * prixSoin;
+            montantRembourse = calculerMontantAvantMax();
         }
+        cumulerSoinsAPayer();
         return montantRembourse;
+    }
+
+    double choisirCompteur(){
+        double compteur = 0;
+        if (estMassotherapie()){
+            compteur = compteurMasso;
+        } else if (estOsteopatie()) {
+            compteur = compteurMasso;
+        }else if (estPsychologieIndividuelle()) {
+            compteur = compteurMasso;
+        }else if (estSoinsDentaires()) {
+            compteur = compteurMasso;
+        }else if (estNaturopatieAcuponcture()) {
+            compteur = compteurMasso;
+        }else if (estChiropratie()) {
+            compteur = compteurMasso;
+        }else if (estPhysiotherapie()) {
+            compteur = compteurMasso;
+        }else if (estOrthophonieErgotherapie()) {
+            compteur = compteurMasso;
+        }
+        return compteur;
     }
 
     public long getNumeroSoin() {
