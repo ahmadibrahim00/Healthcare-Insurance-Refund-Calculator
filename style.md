@@ -10,6 +10,7 @@ Toutefois, il faut aussi ajouter :
 - qu'on accepte qu'une déclaration *' if '* ait aucune accolade qui la délimite, si la condition est appliqué sur seulement une instruction.
 - qu'une variable locale n'est pas obligé d'être initié au tout début d'une méthode si la méthode doit être validé par une déclaration *if* avant l'exécution des instructions.
 - qu'un niveau d'indentation vaut 4 espaces.
+- qu'une ligne de commentaire ou de code ne devrait pas dépasser 120 caractères.
 
 ## Langue
 
