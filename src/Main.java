@@ -20,23 +20,8 @@ public class Main {
             JSON.getNbSoin();
             JSON.save();
 
-            ArrayList<Soin> reclamation = new ArrayList<>();
-            for (int i = 0; i < JSON.getNbSoin(); i++) {
-                reclamation.add(new Soin(JSON.getNumClient(), JSON.getContrat(), JSON.getMois(),
-                        JSON.getSoin(i), JSON.getDate(i), JSON.getMontant(i)));
-            }
-
-            ArrayList<Soin> soinsRembourses = new ArrayList<>();
-            for (int i = 0; i < reclamation.size(); i++) {
-                soinsRembourses.add(new Soin(reclamation.get(i).getClient(),
-                        reclamation.get(i).getTypeContrat(), reclamation.get(i).getDateReclamation(),
-                        reclamation.get(i).getNumeroSoin(), reclamation.get(i).getDateSoin(),
-                        reclamation.get(i).calculerRemboursement()));
-            }
-
-            Remboursement remboursement = new Remboursement(soinsRembourses.get(0).getClient(),
-                    soinsRembourses.get(0).getDateReclamation(), soinsRembourses);
-
+            Remboursement remboursement = new Remboursement(Reclamation.soinsRembourses().get(0).getClient(),
+                    Reclamation.soinsRembourses().get(0).getDateReclamation(), Reclamation.soinsRembourses());
         } else {
             JSONObject FichierErreur = new JSONObject();
             FichierErreur.put("message", validation.getMessageErreur());
