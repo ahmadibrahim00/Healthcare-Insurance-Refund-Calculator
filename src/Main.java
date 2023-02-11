@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) throws IOException, ParseException
     {
         Validation validation = new Validation();
-        JSONHash JSON = new JSONHash("Assurance.json", "resultat.json");
+        JSONHash JSON = new JSONHash(args[0], args[1]);
         JSON.load();
         if (validation.estFichierValide(JSON.getFilename(), JSON.getResultat())) {
             JSON.getNumClient();
