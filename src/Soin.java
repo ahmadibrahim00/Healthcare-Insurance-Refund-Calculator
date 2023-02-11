@@ -289,7 +289,7 @@ public class Soin {
      */
     public String toStringPrixSoin() {
         DecimalFormat decimalFormat = new DecimalFormat("#.00");
-        return decimalFormat.format(prixSoin) + " $";
+        return decimalFormat.format(prixSoin) + "$";
     }
 
     public char getTypeContrat() {
