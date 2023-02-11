@@ -3,8 +3,13 @@ import org.json.simple.parser.ParseException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Reclamation {
-
+public class CalculateurReclamation {
+    /**
+     * Prend les informations d'un fichier JSON et cree une liste des soins dans la reclamation
+     * @return Une liste qui contient la liste des soins a rembourser qui contiennent les informations du client
+     * @throws IOException
+     * @throws ParseException
+     */
     private static ArrayList<Soin> genererReclamation() throws IOException, ParseException {
         JSONHash JSON = new JSONHash("Assurance.json", "resultat.json");
         JSON.load();
@@ -16,7 +21,13 @@ public class Reclamation {
         return reclamation;
     }
 
-    public static ArrayList<Soin> soinsRembourses() throws IOException, ParseException{
+    /**
+     * Premd les Soins, leur applique le calcul de remboursement et les retourne dans une liste de soins avec les valeurs du remboursement
+     * @return Une liste qui contient les soins avec la valeur de leur remboursement
+     * @throws IOException
+     * @throws ParseException
+     */
+    public static ArrayList<Soin> getSoinsRembourses() throws IOException, ParseException{
         ArrayList<Soin> soinsRembourses = new ArrayList<>();
             for (int i = 0; i < genererReclamation().size(); i++) {
                 soinsRembourses.add(new Soin(genererReclamation().get(i).getClient(),
