@@ -21,9 +21,7 @@ public class Main {
             JSON.save();
 
             ArrayList<Soin> reclamation = new ArrayList<>();
-            //Creation du arraylist avec des objets Soin avec tous leurs attributs
-            //TODO la condition doit etre "i < JSON.getNombreReclamations()" au lieu de "i < 3"
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < JSON.getNbSoin(); i++) {
                 reclamation.add(new Soin(JSON.getNumClient(), JSON.getContrat(), JSON.getMois(),
                         JSON.getSoin(i), JSON.getDate(i), JSON.getMontant(i)));
             }
@@ -38,6 +36,7 @@ public class Main {
 
             Remboursement remboursement = new Remboursement(soinsRembourses.get(0).getClient(),
                     soinsRembourses.get(0).getDateReclamation(), soinsRembourses);
+
         } else {
             JSONObject FichierErreur = new JSONObject();
             FichierErreur.put("message", validation.getMessageErreur());
