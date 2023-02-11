@@ -2,7 +2,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) throws IOException, ParseException
@@ -20,8 +19,18 @@ public class Main {
             JSON.getNbSoin();
             JSON.save();
 
-            Remboursement remboursement = new Remboursement(Reclamation.soinsRembourses().get(0).getClient(),
-                    Reclamation.soinsRembourses().get(0).getDateReclamation(), Reclamation.soinsRembourses());
+            Remboursement remboursement = new Remboursement(CalculateurReclamation.getSoinsRembourses().get(0).getClient(),
+                    CalculateurReclamation.getSoinsRembourses().get(0).getDateReclamation(), CalculateurReclamation.getSoinsRembourses());
+
+            //Tests des valeurs de sortie (temporaire)
+            System.out.println(remboursement.getClient());
+            System.out.println(remboursement.getDateReclamation());
+            for (int i = 0; i < remboursement.getSoinsRembourses().size(); i++){
+                System.out.println(remboursement.getSoinsRembourses().get(i).getNumeroSoin());
+                System.out.println(remboursement.getSoinsRembourses().get(i).getDateSoin());
+                System.out.println(remboursement.getSoinsRembourses().get(i).getPrixSoin());
+            }
+
         } else {
             JSONObject FichierErreur = new JSONObject();
             FichierErreur.put("message", validation.getMessageErreur());
