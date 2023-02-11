@@ -28,7 +28,7 @@ public class Main {
             for (int i = 0; i < remboursement.getSoinsRembourses().size(); i++){
                 System.out.println(remboursement.getSoinsRembourses().get(i).getNumeroSoin());
                 System.out.println(remboursement.getSoinsRembourses().get(i).getDateSoin());
-                System.out.println(remboursement.getSoinsRembourses().get(i).getPrixSoin());
+                System.out.println(remboursement.getSoinsRembourses().get(i).toStringPrixSoin());
             }
 
         } else {
