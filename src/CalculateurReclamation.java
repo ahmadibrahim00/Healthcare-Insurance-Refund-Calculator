@@ -6,7 +6,8 @@ import java.util.ArrayList;
 public class CalculateurReclamation {
 
     static ArrayList<Double> montantsRembourses;
-
+    private static String fichierEntree;
+    private static String fichierSortie;
 
     public CalculateurReclamation() throws IOException, ParseException {
         this.montantsRembourses = ecrireSoinsRembourses();
@@ -14,12 +15,13 @@ public class CalculateurReclamation {
 
     /**
      * Genere les informations d'une reclamation a partir du fichier JSON
+     *
      * @return Reclamation sous form d'ArrayList
      * @throws IOException
      * @throws ParseException
      */
     private static ArrayList<Soin> genererReclamation() throws IOException, ParseException {
-        JSONHash JSON = new JSONHash("Assurance.json", "resultat.json");
+        JSONHash JSON = new JSONHash(fichierEntree, fichierSortie);
         JSON.load();
         ArrayList<Soin> reclamation = new ArrayList();
 
@@ -31,6 +33,7 @@ public class CalculateurReclamation {
 
     /**
      * Appelle la methode qui calcule les remboursements et retourne les donnes dans un Arraylist
+     *
      * @return Un ArrayList de double
      * @throws IOException
      * @throws ParseException
@@ -45,6 +48,7 @@ public class CalculateurReclamation {
 
     /**
      * Permet d'obtenir les informations de tous les soins auxquels on a applique un remboursement sous forme d'ArrayList
+     *
      * @return Un ArrayList des soins rembourses
      * @throws IOException
      * @throws ParseException
@@ -61,4 +65,11 @@ public class CalculateurReclamation {
         return soinsRembourses;
     }
 
+    public static void setFichierEntree(String fichierEntree) {
+        CalculateurReclamation.fichierEntree = fichierEntree;
+    }
+
+    public static void setFichierSortie(String fichierSortie) {
+        CalculateurReclamation.fichierSortie = fichierSortie;
+    }
 }
