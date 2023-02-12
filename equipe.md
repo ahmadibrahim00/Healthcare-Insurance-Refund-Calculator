@@ -40,12 +40,22 @@ Gabriel Michaud (MICG93070107) :
 
 
 Vincent Michaud (code perm) :
-- Courriel 	     :  
-- Pour rejoindre : 
-- Disponibilité  : 
-- Forces 	     : 
+- Courriel 	     : michaud.vincent.3@courrier.uqam.ca
+- Pour rejoindre : Vincent Michaud sur Messenger
+- Disponibilité  : Tous les jours de 11h00 à 3h00 (am), **SAUF** : 
+  - lundi de 9h00 à 18h00
+  - mardi de 14h00 à 16h30
+  - mercredi après 16h00
+  - jeudi de 18h00 à 21h00
+- Forces 	     : Motivé à mettre autant de temps que nécessaire, capable de le faire
+faire et travailleur plusieurs heures de suite
 - Faiblesses     : 
-- Compétences    :
+  - Difficulté à allouer le temps aux bons endroits
+  - Difficulté à maitriser des nouveaux concepts rapidement
+  - Voit souvent la meilleur solution au problème trop tard, sans avoir le temps de la mettre en oeuvre
+  - Difficulte a voir la solution avant de commencer a coder, ce qui a tendance a salir mon code
+  - Un peu confus face aux nouvelles notions vues apres 1120
+- Compétences    : Pas trop pire avec les bases de Java
 
 
 
