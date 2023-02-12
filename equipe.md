@@ -55,24 +55,24 @@ faire et travailleur plusieurs heures de suite
   - Voit souvent la meilleur solution au problème trop tard, sans avoir le temps de la mettre en oeuvre
   - Difficulte a voir la solution avant de commencer a coder, ce qui a tendance a salir mon code
   - Un peu confus face aux nouvelles notions vues apres 1120
-- Compétences    : Pas trop pire avec les bases de Java
-
-
-
+- Compétences    : Confortable avec les bases de Java
 
 ## Charte de l'équipe (entente) 
 
 ### Répartition des tâches
 
 Avant chaque sprint (tp), on va évaluer et analyser l'énoncé reçu et on va se mettre d'accord sur le nombre de tâches à effectuer et qui va faire quoi.
+Nous sommes tous responsable de travailler sur la classe Main pour integrer nos parties.
 
 ### Méthode de travail
 
-Une fois que chaque personne sais quoi faire comme tâches, ça devient du travail individuel, mais si quelqu' un bloque ou a besoin d'aide, les autres coéquipiers se doivent de l'aider.
+Une fois que chaque personne sait quoi faire comme tâches, ça devient du travail individuel, mais si quelqu'un bloque ou a besoin d'aide, les autres coéquipiers se doivent de l'aider.
 
 ### Méthode de résolution de conflit
 
-Aucune, on aime mieux ne pas penser à ça, chaque membre a une bonne tête sur les épaules et il n'y a pas de gros égos.(à vérifier)
+Si un conflit majeur eclate, une discussion aura lieu avec tous le membres de l'equipe, 
+pour trouver une solution construstive, un compromis qui satisfera le mieux toutes les parties impliquees.
+Par contre chaque membre a une bonne tête sur les épaules et il n'y a pas de gros égos.(à vérifier)
 
 ### Sanctions prévues
 
