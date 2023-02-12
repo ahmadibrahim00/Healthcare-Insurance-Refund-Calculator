@@ -1,12 +1,12 @@
-import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
-
 import java.io.IOException;
 
-
+/**
+ * La methode Main permet de prendre un fichier d'entree JSON, de verifier la validite de son contenu et de creer un
+ * fichier de sortie JSON contenant, soit les donnees modifiees ou un message d'erreur specifiant le premier probleme
+ * survenu.
+ */
 public class Main {
-    public Main() {
-    }
 
     public static void main(String[] args) throws IOException, ParseException {
         Validation validation = new Validation();
@@ -14,11 +14,9 @@ public class Main {
         JSON.load();
         if (validation.estFichierValide(JSON.getFilename(), JSON.getResultat())) {
             Remboursement.outputJSON();
-            Remboursement.formatJSON();
         } else {
-            JSONObject FichierErreur = new JSONObject();
-            FichierErreur.put("message", validation.getMessageErreur());
+            Remboursement.outputJSONErreur(validation.getMessageErreur());
         }
-
+        Remboursement.formatJSON();
     }
 }
