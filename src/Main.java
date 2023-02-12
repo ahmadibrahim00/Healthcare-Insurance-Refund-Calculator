@@ -14,9 +14,11 @@ public class Main {
         JSON.load();
         if (validation.estFichierValide(JSON.getFilename(), JSON.getResultat())) {
             Remboursement.outputJSON();
+            Remboursement.formatJSON();
         } else {
-            Remboursement.outputJSONErreur(validation.getMessageErreur());
+            JSONObject FichierErreur = new JSONObject();
+            FichierErreur.put("message", validation.getMessageErreur());
         }
-        Remboursement.formatJSON();
+
     }
 }
