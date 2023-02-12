@@ -1,4 +1,5 @@
 import org.json.simple.parser.ParseException;
+
 import java.io.IOException;
 
 /**
@@ -12,6 +13,7 @@ public class Main {
         Validation validation = new Validation();
         JSONHash JSON = new JSONHash("Assurance.json", "resultat.json");
         JSON.load();
+        CalculateurReclamation calculateurReclamation = new CalculateurReclamation();
         if (validation.estFichierValide(JSON.getFilename(), JSON.getResultat())) {
             Remboursement.outputJSON();
         } else {
