@@ -51,6 +51,9 @@ public class Remboursement {
         }
         json2.put("Réclamations", json);
     }
+    public static void outputJSONErreur(String messageErreur) {
+        json2.put("message", messageErreur);
+    }
     /**
      * Cette méthode permet de formatter le output de toutes les données traiter dans le format style JSON*/
     public static void formatJSON() throws FileNotFoundException {
