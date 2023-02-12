@@ -17,7 +17,7 @@ public class Soin {
         this.prixSoin = prixSoin;
     }
 
-     /**
+    /**
      * Calcule le montant a rembourser pour chaque soins en fonction du maximum par type de soin
      * @return le montant a rembourser
      */
@@ -32,7 +32,6 @@ public class Soin {
        }
         if(montantRembourse < 0) montantRembourse = 0;
         dejaPaye.accumuler(numeroSoin, montantRembourse);
-        System.out.println(montantRembourse);
         return montantRembourse;
     }
 
