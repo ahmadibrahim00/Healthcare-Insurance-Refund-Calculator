@@ -1,3 +1,9 @@
+/**
+ * Modelise un remboursement qui contient toutes les informations qui seront presentes dans le JSON de sortie
+ * @author Vincent Michaud
+ * @version 12 fevrier 2023
+ */
+
 import java.util.ArrayList;
 
 public class Remboursement {

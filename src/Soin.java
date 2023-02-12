@@ -1,3 +1,10 @@
+/**
+ * Cette classe modelise un objet soin et contient des methodes pour calculer un remboursement de ces derniers en
+ * fonction d'un contrat.
+ * @autor Vincent Michaud
+ * @version 12 fevrier 2023
+ */
+
 import java.text.DecimalFormat;
 
 public class Soin {

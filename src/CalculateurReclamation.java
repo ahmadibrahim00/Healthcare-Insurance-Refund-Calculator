@@ -1,3 +1,9 @@
+/**
+ * Cette classe contien des methodes qui appliquent le remboursement selon les donnes fournis dans Soin
+ * @author Vincent Michaud
+ * @version 12 fevrier 2023
+ */
+
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
