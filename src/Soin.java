@@ -1,12 +1,3 @@
-/**
- * Cette classe modelise un objet soin et contient des methodes pour calculer un remboursement de ces derniers en
- * fonction d'un contrat.
- * @autor Vincent Michaud
- * @version 12 fevrier 2023
- */
-
-import java.text.DecimalFormat;
-
 public class Soin {
     private long client;
     private char typeContrat;
@@ -289,14 +280,8 @@ public class Soin {
         return dateSoin;
     }
 
-    /**
-     * transforme la donnee prixSoin de double a String et lui ajoute le signe de $ et
-     * conserve toujours deux chiffres apres la virgule.
-     * @return le prixSoin formate
-     */
-    public String toStringPrixSoin() {
-        DecimalFormat decimalFormat = new DecimalFormat("#.00");
-        return decimalFormat.format(prixSoin) + "$";
+    public double getPrixSoin() {
+        return prixSoin;
     }
 
     public char getTypeContrat() {
