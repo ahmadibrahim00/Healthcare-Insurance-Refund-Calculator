@@ -5,15 +5,7 @@ public class Soin {
     private long numeroSoin;
     private String dateSoin;
     private double prixSoin;
-    private static double compteurMasso;
-    private static double compteurOsteo;
-    private static double compteurPsycho;
-    private static double compteurDentaire;
-    private static double compteurNaturoAcu;
-    private static double compteurChiro;
-    private static double compteurPhysio;
-    private static double compteurOrthoErgo;
-
+    CompteurDeRemboursement dejaPaye = new CompteurDeRemboursement();
 
     public Soin(long client, char typeContrat, String dateReclamation,
                 long numeroSoin, String dateSoin, double prixSoin) {
@@ -31,54 +23,17 @@ public class Soin {
      */
     public double calculerRemboursement(){
         double montantRembourse = 0;
-        if (maxExiste() && choisirCompteur() + calculerMontantAvantMax() <= trouverMax()){
-            montantRembourse = calculerMontantAvantMax();
-        } else if (maxExiste()){
-            montantRembourse = trouverMax() - choisirCompteur();
-        } else {
-            montantRembourse = calculerMontantAvantMax();
-        }
-        cumulerSoinsAPayer();
+       if (maxExiste() && dejaPaye.getCompteur(numeroSoin) >= trouverMax()){
+           montantRembourse = 0;
+       } else if (maxExiste() && dejaPaye.getCompteur(numeroSoin) + calculerMontantAvantMax() >= trouverMax()){
+           montantRembourse = trouverMax() - dejaPaye.getCompteur(numeroSoin);
+       } else {
+           montantRembourse = calculerMontantAvantMax();
+       }
+        if(montantRembourse < 0) montantRembourse = 0;
+        dejaPaye.accumuler(numeroSoin, montantRembourse);
+        System.out.println(montantRembourse);
         return montantRembourse;
-    }
-
-     /**
-     * Pour chaque soin, additionne les montants a rembourser dans un compteur
-     */
-    private void cumulerSoinsAPayer(){
-        if(estMassotherapie()) compteurMasso = compteurMasso + calculerMontantAvantMax();
-        if(estMassotherapie()) compteurOsteo = compteurOsteo + calculerMontantAvantMax();
-        if(estMassotherapie()) compteurPsycho = compteurPsycho + calculerMontantAvantMax();
-        if(estMassotherapie()) compteurDentaire = compteurDentaire + calculerMontantAvantMax();
-        if(estMassotherapie()) compteurNaturoAcu = compteurNaturoAcu + calculerMontantAvantMax();
-        if(estMassotherapie()) compteurChiro = compteurChiro + calculerMontantAvantMax();
-        if(estMassotherapie()) compteurPhysio = compteurPhysio + calculerMontantAvantMax();
-        if(estMassotherapie()) compteurOrthoErgo = compteurOrthoErgo + calculerMontantAvantMax();
-    }
-    /**
-     * Determine quel compteur utiliser pour accumuler les remboursements selon le ype du soin
-     * @return La valeur presente dans le compteur qui correspond au type de soin
-     */
-    private double choisirCompteur(){
-        double compteur = 0;
-        if (estMassotherapie()){
-            compteur = compteurMasso;
-        } else if (estOsteopatie()) {
-            compteur = compteurMasso;
-        }else if (estPsychologieIndividuelle()) {
-            compteur = compteurMasso;
-        }else if (estSoinsDentaires()) {
-            compteur = compteurMasso;
-        }else if (estNaturopatieAcuponcture()) {
-            compteur = compteurMasso;
-        }else if (estChiropratie()) {
-            compteur = compteurMasso;
-        }else if (estPhysiotherapie()) {
-            compteur = compteurMasso;
-        }else if (estOrthophonieErgotherapie()) {
-            compteur = compteurMasso;
-        }
-        return compteur;
     }
 
     /**
