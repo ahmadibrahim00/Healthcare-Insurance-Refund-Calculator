@@ -3,10 +3,10 @@
 ### Ajout des dependances : 
 
 - `File > Project Structures > Modules > + (add) > JAR or directories` ajouter :
-  - "json-20220924.jar" 
-  - "json-lib-2.4-jdk15.jar" 
-  - "json-simple-1.1.1.jar"
-  - "gson-2.10.1.jar"
+  - "json-20220924.jar" https://mvnrepository.com/artifact/org.json/json/20220924
+  - "json-lib-2.4-jdk15.jar" : http://www.java2s.com/Code/Jar/j/Downloadjsonlib24jdk15jar.htm
+  - "json-simple-1.1.1.jar" : https://code.google.com/archive/p/json-simple/downloads
+  - "gson-2.10.1.jar" : https://search.maven.org/artifact/com.google.code.gson/gson/2.10.1/jar
 
 ### Ensuite, pour creer l'archive executable :
 
