@@ -1,39 +1,40 @@
-import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) throws IOException, ParseException
     {
-        Validation validation = new Validation();
-        JSONHash JSON = new JSONHash(args[0], args[1]);
+        JSONHash JSON = new JSONHash("Assurance.json", "resultat.json");
+
         JSON.load();
-        if (validation.estFichierValide(JSON.getFilename(), JSON.getResultat())) {
-            JSON.getNumClient();
-            JSON.getContrat();
-            JSON.getMois();
-            JSON.getSoin(1);
-            JSON.getDate(0);
-            JSON.getMontant(0);
-            JSON.getNbSoin();
-            JSON.save();
+        JSON.getNumClient();
+        JSON.getContrat();
+        JSON.getMois();
+        JSON.getSoin(1);
+        JSON.getDate(0);
+        JSON.getMontant(0);
+        JSON.getNbSoin();
+        JSON.save();
 
-            Remboursement remboursement = new Remboursement(CalculateurReclamation.getSoinsRembourses().get(0).getClient(),
-                    CalculateurReclamation.getSoinsRembourses().get(0).getDateReclamation(), CalculateurReclamation.getSoinsRembourses());
-
-            //Tests des valeurs de sortie (temporaire)
-            System.out.println(remboursement.getClient());
-            System.out.println(remboursement.getDateReclamation());
-            for (int i = 0; i < remboursement.getSoinsRembourses().size(); i++){
-                System.out.println(remboursement.getSoinsRembourses().get(i).getNumeroSoin());
-                System.out.println(remboursement.getSoinsRembourses().get(i).getDateSoin());
-                System.out.println(remboursement.getSoinsRembourses().get(i).toStringPrixSoin());
-            }
-
-        } else {
-            JSONObject FichierErreur = new JSONObject();
-            FichierErreur.put("message", validation.getMessageErreur());
+        ArrayList<Soin> reclamation = new ArrayList<>();
+        //Creation du arraylist avec des objets Soin avec tous leurs attributs
+        //TODO la condition doit etre "i < JSON.getNombreReclamations()" au lieu de "i < 3"
+        for (int i = 0; i < 3 ; i++) {
+            reclamation.add(new Soin(JSON.getNumClient(), JSON.getContrat(), JSON.getMois(),
+                    JSON.getSoin(i), JSON.getDate(i), JSON.getMontant(i)));
         }
+
+        ArrayList<Soin> soinsRembourses = new ArrayList<>();
+         for (int i = 0; i < reclamation.size() ; i++) {
+             soinsRembourses.add(new Soin(reclamation.get(i).getClient(),
+                     reclamation.get(i).getTypeContrat(), reclamation.get(i).getDateReclamation(),
+                     reclamation.get(i).getNumeroSoin(), reclamation.get(i).getDateSoin(),
+                     reclamation.get(i).calculerRemboursement()));
+         }
+
+         Remboursement remboursement = new Remboursement(soinsRembourses.get(0).getClient(),
+                     soinsRembourses.get(0).getDateReclamation(), soinsRembourses);
     }
 }
