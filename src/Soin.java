@@ -1,3 +1,9 @@
+/**
+ * Cette classe permet de calculer les montants a rembourser selon le type de contrat et le prix des soins.
+ *
+ * @version 12 février 2023
+ */
+
 import java.text.DecimalFormat;
 
 public class Soin {
