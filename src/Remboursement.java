@@ -46,7 +46,7 @@ public class Remboursement {
             JSONObject json1 = new JSONObject();
             json1.put("Numéro de soin", remboursement.getSoinsRembourses().get(i).getNumeroSoin());
             json1.put("Date de soin", remboursement.getSoinsRembourses().get(i).getDateSoin());
-            json1.put("Prix du soin remboursé", remboursement.getSoinsRembourses().get(i).getPrixSoin());
+            json1.put("Prix du soin remboursé", remboursement.getSoinsRembourses().get(i).toStringPrixSoin());
             json.add(json1);
         }
         json2.put("Réclamations", json);
