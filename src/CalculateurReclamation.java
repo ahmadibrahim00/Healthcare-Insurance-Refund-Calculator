@@ -1,3 +1,9 @@
+/**
+ * Cette classe permet de calculer les montants a rembourser selon le type de contrat et le prix des soins.
+ *
+ * @version 12 février 2023
+ */
+
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -26,7 +32,8 @@ public class CalculateurReclamation {
         ArrayList<Soin> reclamation = new ArrayList();
 
         for (int i = 0; i < JSON.getNbSoin(); ++i) {
-            reclamation.add(new Soin(JSON.getNumClient(), JSON.getContrat(), JSON.getMois(), JSON.getSoin(i), JSON.getDate(i), (double) JSON.getMontant(i)));
+            reclamation.add(new Soin(JSON.getNumClient(), JSON.getContrat(), JSON.getMois(), JSON.getSoin(i),
+                    JSON.getDate(i), (double) JSON.getMontant(i)));
         }
         return reclamation;
     }
@@ -47,7 +54,8 @@ public class CalculateurReclamation {
     }
 
     /**
-     * Permet d'obtenir les informations de tous les soins auxquels on a applique un remboursement sous forme d'ArrayList
+     * Permet d'obtenir les informations de tous les soins auxquels on a applique un remboursement sous forme
+     * d'ArrayList
      *
      * @return Un ArrayList des soins rembourses
      * @throws IOException
@@ -57,18 +65,28 @@ public class CalculateurReclamation {
         ArrayList<Soin> soinsRembourses = new ArrayList();
 
         for (int i = 0; i < genererReclamation().size(); ++i) {
-            soinsRembourses.add(new Soin(((Soin) genererReclamation().get(i)).getClient(), ((Soin) genererReclamation().get(i)).getTypeContrat(),
-                    ((Soin) genererReclamation().get(i)).getDateReclamation(), ((Soin) genererReclamation().get(i)).getNumeroSoin(),
+            soinsRembourses.add(new Soin(((Soin) genererReclamation().get(i)).getClient(),
+                    ((Soin) genererReclamation().get(i)).getTypeContrat(),
+                    ((Soin) genererReclamation().get(i)).getDateReclamation(),
+                    ((Soin) genererReclamation().get(i)).getNumeroSoin(),
                     ((Soin) genererReclamation().get(i)).getDateSoin(), montantsRembourses.get(i)));
         }
 
         return soinsRembourses;
     }
 
+    /**
+     * Cette methode permet d'instancier le fichier d'entree
+     * @param fichierEntree le fichier d'entree
+     */
     public static void setFichierEntree(String fichierEntree) {
         CalculateurReclamation.fichierEntree = fichierEntree;
     }
 
+    /**
+     * Cette methode permet d'instancier le ficheir de sortie
+     * @param fichierSortie le ficheir de sortie
+     */
     public static void setFichierSortie(String fichierSortie) {
         CalculateurReclamation.fichierSortie = fichierSortie;
     }
