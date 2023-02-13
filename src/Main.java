@@ -11,12 +11,12 @@ public class Main {
 
     public static void main(String[] args) throws IOException, ParseException {
         Validation validation = new Validation();
-        JSONHash JSON = new JSONHash(args[0], args[1]);
+        JSONHash JSON = new JSONHash("Assurance.json", "lol.json");
         JSON.load();
-        CalculateurReclamation.setFichierEntree(args[0]);
-        CalculateurReclamation.setFichierSortie(args[1]);
-        CalculateurReclamation calculateurReclamation = new CalculateurReclamation();
         if (validation.estFichierValide(JSON.getFilename(), JSON.getResultat())) {
+        CalculateurReclamation.setFichierEntree("Assurance.json");
+        CalculateurReclamation.setFichierSortie("lol.json");
+        new CalculateurReclamation();
             Remboursement.outputJSON();
         } else {
             Remboursement.outputJSONErreur(validation.getMessageErreur());
