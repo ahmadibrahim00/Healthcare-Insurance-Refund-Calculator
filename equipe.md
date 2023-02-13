@@ -62,26 +62,30 @@ faire et travailleur plusieurs heures de suite
 
 ### Répartition des tâches
 
-Avant chaque sprint (tp), on va évaluer et analyser l'énoncé reçu et on va se mettre d'accord sur le nombre de tâches à effectuer et qui va faire quoi.
 Nous sommes tous responsable de travailler sur la classe Main pour integrer nos parties.
+Avant d'ammorcer le travail demander, nous évaluons et séparons les tâches équitablement afin que chaque membre de l'équipe ait une charge égale. Nous sommes alors tous responsables de 
+communiquer entre nous en cas de besoins et de toujours faire des "commit" afin de montrer que chacun fait du progrès.
 
 ### Méthode de travail
 
-Une fois que chaque personne sait quoi faire comme tâches, ça devient du travail individuel, mais si quelqu'un bloque ou a besoin d'aide, les autres coéquipiers se doivent de l'aider.
+Une fois les tâches répartit, le travail se fait individuellement sauf si une partie est dépendante d'un autre coéquipier. Dans tout les cas, la communication est toujours recommander même si
+nos tâches ne sont pas directement lié. Il est important de se faire des "update" quotidiennement que l'on aie avancer ou pas afin de que notre vision par rapport au travail reste clair.
 
 ### Méthode de résolution de conflit
 
-Si un conflit majeur eclate, une discussion aura lieu avec tous le membres de l'equipe, 
-pour trouver une solution construstive, un compromis qui satisfera le mieux toutes les parties impliquees.
-Par contre chaque membre a une bonne tête sur les épaules et il n'y a pas de gros égos.(à vérifier)
+Lors d'un conflit majeur se produit, une discussion se fera alors avec tous le membres de l'equipe afin 
+de trouver une solution construstive. Chaque membre doit arriver à un compromis équitable dans le respect afin de bien poursuivre le reste du travail demandé. 
 
 ### Sanctions prévues
 
-À déterminer...
+Tout dépendant de la gravité des choses bien sûre mais les sanctions prévues afin résoudre un désaccord ou un conflis doit être directement proportionnel à la gravité
+de la situation. Si un coéquipier ne répond jamais aux messages par exemple, une solution serait de lui approcher en cours et de lui faire part de ce problème. Si un coéquipier est de mauvaise fois, il est important d'essayer de l'en dissuader ou d'en venir à des termes raisonnables entre vous. Si il est toujours résilient, il faut alors en communiquer avec un supérieur.
 
 ### Définition de "Terminé" 
 
-Il faut que le code compile, qu'il fasse ce qui est demandé dans les spécifications et qu'il soit testé.
+Notre définition de terminé est simple, il faut que tout ce qui est demandé doit être fait et dans les cas d'ambiguité dans des demandes de projet, il est nécessaire de préciser les démarches 
+prises durant le progrès du projet. En général, un projet terminé est un projet qui run parfaitement, qui est expliqué étapes par étapes de comment l'utilisé, que tout les critères demandés soit
+valides et qu'il n'y ait aucun "bug" ou erreur afin que l'expérience de l'utilisateur soit sans aucun souci.
 
 
 
