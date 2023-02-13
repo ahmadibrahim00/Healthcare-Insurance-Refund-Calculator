@@ -13,7 +13,6 @@ import org.json.simple.parser.ParseException;
 import java.io.IOException;
 
 public class Validation {
-    //Utilise pour valider les methode de validation.
     private boolean valide;
     private JSONObject reclamationClient;
     private String messageErreur = "";
