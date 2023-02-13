@@ -40,7 +40,7 @@ Gabriel Michaud (MICG93070107) :
 
 
 
-Vincent Michaud (code perm) :
+Vincent Michaud (MICV19039302) :
 - Courriel 	     : michaud.vincent.3@courrier.uqam.ca
 - Pour rejoindre : Vincent Michaud sur Messenger
 - Disponibilité  : Tous les jours de 11h00 à 3h00 (am), **SAUF** : 
