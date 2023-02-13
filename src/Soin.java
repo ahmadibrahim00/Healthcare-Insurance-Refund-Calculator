@@ -1,3 +1,5 @@
+import java.text.DecimalFormat;
+
 public class Soin {
     private long client;
     private char typeContrat;
@@ -234,8 +236,14 @@ public class Soin {
         return dateSoin;
     }
 
-    public double getPrixSoin() {
-        return prixSoin;
+
+    /**
+     * Formate le prix avec deux chiffres apres la virgule et ajoue "$"
+     * @return String prixSoin formate
+     */
+    public String toStringPrixSoin() {
+    DecimalFormat decimalFormat = new DecimalFormat("#.00");
+    return decimalFormat.format(prixSoin) + "$";
     }
 
     public char getTypeContrat() {
