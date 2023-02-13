@@ -1,5 +1,5 @@
 /**
- * Cette classe permet de calculer les montants a rembourser selon le type de contrat et le prix des soins.
+ * Cette classe permet de mettre toutes les informations de remboursement liées aux soins dans un ArrayList.
  *
  * @version 12 février 2023
  */
