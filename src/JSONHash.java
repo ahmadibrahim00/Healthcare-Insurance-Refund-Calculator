@@ -1,3 +1,10 @@
+/**
+ * Cette classe sert a aller chercher les donnees dans le fichier d'entree et de permettre d'en sortir les valeurs.
+ *
+ * @author Ahmad Ibrahim (IBRA12069802)
+ * @version 12 février 2023
+ */
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -31,8 +38,9 @@ public class JSONHash {
     public JSONObject getJsonobj() {
         return jsonobj;
     }
-/**
- * Cette méthode permet de charger le fichier demandé, sinon il output une erreur*/
+    /**
+     * Cette méthode permet de charger le fichier demandé, sinon il output une erreur
+     */
     public void load() throws IOException, ParseException {
         try {
             Object obj = new JSONParser().parse(new FileReader(filename));
@@ -42,7 +50,8 @@ public class JSONHash {
         }
     }
     /**
-     * Cette méthode écrit le resultat final dans un fichier resultat JSON*/
+     * Cette méthode ecrit le resultat final dans un fichier resultat JSON
+     */
     public static void save(String output) throws FileNotFoundException {
         PrintWriter pw = new PrintWriter(resultat);
         pw.write(output);
@@ -50,36 +59,35 @@ public class JSONHash {
         pw.close();
     }
     /**
-     * Cette méthode vas chercher la valeur du numéro de client*/
-    public long getNumClient()
-    {
+     * Cette méthode va chercher la valeur du numéro de client
+     */
+    public long getNumClient() {
         String client = (String) jsonobj.get("client");
         Long numclient = Long.valueOf(client);
         return numclient;
     }
     /**
-     * Cette méthode vas chercher la lettre du contrat*/
-    public char getContrat()
-    {
+     * Cette méthode va chercher la lettre du contrat
+     */
+    public char getContrat() {
         String contrat = (String) jsonobj.get("contrat");
         char lettrecontrat = contrat.charAt(0);
         return lettrecontrat;
     }
     /**
-     * Cette méthode vas chercher le mois du contrat*/
-    public String getMois()
-    {
+     * Cette méthode va chercher le mois du contrat
+     */
+    public String getMois() {
         String mois = (String) jsonobj.get("mois");
         return mois;
     }
     /**
-     * Cette méthode vas chercher le numéro du soin du contrat*/
-    public Long getSoin(int i)
-    {
+     * Cette méthode va chercher le numéro du soin du contrat
+     */
+    public Long getSoin(int i) {
         JSONArray reclamations = (JSONArray) jsonobj.get("reclamations");
         ArrayList<Long> array = new ArrayList<Long>();
-        for (Object arA: reclamations)
-        {
+        for (Object arA: reclamations) {
             JSONObject reclamation = (JSONObject) arA;
             Long soin = (Long) reclamation.get("soin");
             array.add(soin);
@@ -87,13 +95,12 @@ public class JSONHash {
         return array.get(i);
     }
     /**
-     * Cette méthode vas chercher le nombre de soin appliqué sur le client dans le contrat*/
-    public int getNbSoin()
-    {
+     * Cette méthode va chercher le nombre de soins appliqué sur le client dans le contrat
+     */
+    public int getNbSoin() {
         JSONArray reclamations = (JSONArray) jsonobj.get("reclamations");
         int cpt_soins = 0;
-        for (Object arA: reclamations)
-        {
+        for (Object arA: reclamations) {
             JSONObject reclamation = (JSONObject) arA;
             Long soin = (Long) reclamation.get("soin");
             cpt_soins += 1;
@@ -101,13 +108,12 @@ public class JSONHash {
         return cpt_soins;
     }
     /**
-     * Cette méthode vas chercher la date complète d'un soin*/
-    public String getDate(int i)
-    {
+     * Cette méthode va chercher la date complète d'un soin
+     */
+    public String getDate(int i) {
         JSONArray reclamations = (JSONArray) jsonobj.get("reclamations");
         ArrayList<String> array = new ArrayList<String>();
-        for (Object arA: reclamations)
-        {
+        for (Object arA: reclamations) {
             JSONObject reclamation = (JSONObject) arA;
             String date = (String) reclamation.get("date");
             array.add(date);
@@ -115,12 +121,12 @@ public class JSONHash {
         return array.get(i);
     }
     /**
-     * Cette méthode vas chercher le montant payé par le client pour un soin dans le contrat*/
+     * Cette méthode va chercher le montant payé par le client pour un soin dans le contrat
+     */
     public Float getMontant(int i)  {
         JSONArray reclamations = (JSONArray) jsonobj.get("reclamations");
         ArrayList<Float> array = new ArrayList<>();
-        for (Object arA: reclamations)
-        {
+        for (Object arA: reclamations) {
             JSONObject reclamation = (JSONObject) arA;
             String montant = (String) reclamation.get("montant");
             String montantparsed = montant.replaceAll("[$,]", "");
@@ -128,9 +134,8 @@ public class JSONHash {
             array.add(montantfinal);
         }
         return array.get(i);
-        }
-
     }
+}
 
 
 
