@@ -39,14 +39,14 @@ public class Remboursement {
     public static void outputJSON() throws IOException, ParseException {
         Remboursement remboursement = new Remboursement(CalculateurReclamation.getSoinsRembourses().get(0).getClient(),
                 CalculateurReclamation.getSoinsRembourses().get(0).getDateReclamation(), CalculateurReclamation.getSoinsRembourses());
-        json2.put("Numéro Client", remboursement.getClient());
-        json2.put("Date Reclamation", remboursement.getDateReclamation());
+        json2.put("Numéro Client", String.valueOf(remboursement.getClient()));
+        json2.put("Mois Réclamation", remboursement.getDateReclamation());
         for (int i = 0; i < remboursement.getSoinsRembourses().size(); i++)
         {
             JSONObject json1 = new JSONObject();
-            json1.put("Numéro de soin", remboursement.getSoinsRembourses().get(i).getNumeroSoin());
-            json1.put("Date de soin", remboursement.getSoinsRembourses().get(i).getDateSoin());
-            json1.put("Prix du soin remboursé", remboursement.getSoinsRembourses().get(i).toStringPrixSoin());
+            json1.put("Numéro du soin", remboursement.getSoinsRembourses().get(i).getNumeroSoin());
+            json1.put("Date du soin", remboursement.getSoinsRembourses().get(i).getDateSoin());
+            json1.put("Montant remboursé", remboursement.getSoinsRembourses().get(i).toStringPrixSoin());
             json.add(json1);
         }
         json2.put("Réclamations", json);
