@@ -242,7 +242,7 @@ public class Soin {
      * @return String prixSoin formate
      */
     public String toStringPrixSoin() {
-    DecimalFormat decimalFormat = new DecimalFormat("#.00");
+    DecimalFormat decimalFormat = new DecimalFormat("0.00");
     return decimalFormat.format(prixSoin) + "$";
     }
 
