@@ -1,4 +1,16 @@
-## Pour executer le programme : 
+# Projet de session : Demande initiale
+
+## Technologies présentes :
+
+### Langage de programmation
+
+Tout le code a été écrit avec le langage de programmation Java (JDK19).
+
+### IDE
+
+Ce programme a été fait entièrement avec l'IDE IntelliJ IDEA 2022.3, et les instructions pour exécuter le programme sont écrites en s'appuyant sur les menus et fonctionnalités de cet IDE.
+
+## Pour executer le programme :
 
 ### Ajout des dependances : 
 
