@@ -15,13 +15,14 @@
 
 ### Membres
 
-Ahmad Ibrahim (code perm) **Scrum Master** :
-- Courriel 	     :  
-- Pour rejoindre : 
-- Disponibilité  : 
-- Forces 	     : 
-- Faiblesses     : 
-- Compétences    : 
+Ahmad Ibrahim (IBRA12069802) **Scrum Master** :
+- Courriel 	     : ibrahim.ahmad@courrier.uqam.ca  
+- Pour rejoindre : Ahmad Ibrahim sur messenger ou préférablement par courriel.
+- Disponibilité  : Tout les jours sauf les dimanches entre 9h et 19h.
+- Forces 	       : Je suis une personne assidus, je cherche toujours à trouver une solution aux problèmes qui me sont présenté. 
+- Faiblesses     : Je me fais desfois trop confiance en mes connaissances ce qui me met parfois dans des situations de retard par exemple.
+- Compétences    : Je suis toujours motivé de travailler sur quoi que ce soit comme un projet soit seul ou en équipe. Je me cherche toujours à voir plus loin que ce qui m'est présenter
+                   en terme de matières et d'information. 
 
 
 
