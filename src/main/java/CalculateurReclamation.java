@@ -4,10 +4,9 @@
  * @version 12 février 2023
  */
 
-import org.json.simple.parser.ParseException;
-
 import java.io.IOException;
 import java.util.ArrayList;
+import org.json.simple.parser.ParseException;
 
 public class CalculateurReclamation {
 
@@ -59,7 +58,6 @@ public class CalculateurReclamation {
      *
      * @return Un ArrayList des soins rembourses
      * @throws IOException
-     * @throws ParseException
      */
     public static ArrayList<Soin> getSoinsRembourses() throws IOException, ParseException {
         ArrayList<Soin> soinsRembourses = new ArrayList();
