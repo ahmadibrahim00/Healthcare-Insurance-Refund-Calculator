@@ -30,13 +30,13 @@ significatif.
 Les noms de répertoires, du fichier d'entrée et du fichier de sortie peuvent être différents, ils servent seulement d'exemple pour montrer comment
 le projet doit être exécuté avec la ligne de commande.
 - Une fois le projet télécharger sur votre ordinateur, il faut se déplacer dans le root directory du projet.
-- `cd "C:\Users\monNom\projet`
+- `cd "C:\Users\monNom\projet"`
 - Ensuite, on entre les commandes suivantes successivement :
 - `mvn clean`
 - Pour supprimer les fichiers créés par maven lors d'exécutions passées, pour pouvoir mettre les dépendances et le projet
 à jour.
 - `mvn package`
 - Pour build le projet, donc compiler les fichiers .java, exécuter les tests, créer Remboursement.jar, etc. 
-- `java -jar target\Remboursement.jar Reclamation.json Remboursement.json`
+- `java -jar "target\Remboursement.jar" "Reclamation.json" "Remboursement.json"`
 - Puis finalement on exécute le programme et un fichier "Remboursement.json" est créé et placé dans le root directory du projet, 
 contenant soit un fichier contenant les montant à rembourser ou un message d'erreur.
