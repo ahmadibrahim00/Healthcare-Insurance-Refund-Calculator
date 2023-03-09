@@ -9,7 +9,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -59,19 +58,24 @@ public class JSONHash {
         pw.close();
     }
     /**
-     * Cette méthode va chercher la valeur du numéro de client
+     * Cette méthode va chercher la valeur du numéro de dossier
      */
-    public long getNumClient() {
-        String client = (String) jsonobj.get("client");
-        Long numclient = Long.valueOf(client);
-        return numclient;
+    public long getNumDossier() {
+        String client = (String) jsonobj.get("dossier");
+        String client1 = client.replaceAll("[^0-9]", "");
+        Long numDossier = Long.valueOf(client1);
+        System.out.println(numDossier);
+        return numDossier;
     }
+
+
     /**
      * Cette méthode va chercher la lettre du contrat
      */
     public char getContrat() {
-        String contrat = (String) jsonobj.get("contrat");
+        String contrat = (String) jsonobj.get("dossier");
         char lettrecontrat = contrat.charAt(0);
+        System.out.println(lettrecontrat);
         return lettrecontrat;
     }
     /**
