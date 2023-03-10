@@ -14,7 +14,7 @@ public class Soin {
     private long numeroSoin;
     private String dateSoin;
     private double prixSoin;
-    CompteurDeRemboursement dejaPaye = new CompteurDeRemboursement();
+    CompteurDeRemboursement dejaRembourse = new CompteurDeRemboursement();
 
     public Soin(long client, char typeContrat, String dateReclamation,
                 long numeroSoin, String dateSoin, double prixSoin) {
@@ -32,15 +32,15 @@ public class Soin {
      */
     public double calculerRemboursement(){
         double montantRembourse = 0;
-       if (maxExiste() && dejaPaye.getCompteur(numeroSoin) >= trouverMax()){
+       if (maxExiste() && dejaRembourse.getCompteur(numeroSoin) >= trouverMax()){
            montantRembourse = 0;
-       } else if (maxExiste() && dejaPaye.getCompteur(numeroSoin) + calculerMontantAvantMax() >= trouverMax()){
-           montantRembourse = trouverMax() - dejaPaye.getCompteur(numeroSoin);
+       } else if (maxExiste() && dejaRembourse.getCompteur(numeroSoin) + calculerMontantAvantMax() >= trouverMax()){
+           montantRembourse = trouverMax() - dejaRembourse.getCompteur(numeroSoin);
        } else {
            montantRembourse = calculerMontantAvantMax();
        }
         if(montantRembourse < 0) montantRembourse = 0;
-        dejaPaye.accumuler(numeroSoin, montantRembourse);
+        dejaRembourse.accumuler(numeroSoin, montantRembourse);
         return montantRembourse;
     }
 
@@ -54,6 +54,8 @@ public class Soin {
             case 'B' -> obtenirMaxSelonContratB();
             case 'C' -> obtenirMaxSelonContratC();
             case 'D' -> obtenirMaxSelonContratD();
+            case 'E' -> obtenirMaxSelonContratE();
+
             default -> -1;
         };
     }
@@ -82,7 +84,6 @@ public class Soin {
         double max = -1;
         if (estMassotherapie()) max = 40.0;
         else if (estOsteopatie() || estChiropratie()) max = 50.0;
-        else if (estPsychologieIndividuelle()) max = 70.0;
         return max;
     }
     /**
@@ -101,10 +102,20 @@ public class Soin {
     private double obtenirMaxSelonContratD() {
         double max = -1;
         if (estMassotherapie()) max = 85.0;
-        else if (estOsteopatie() || estChiropratie()) max = 75.0;
+        else if (estOsteopatie()) max = 75.0;
         else if (estPsychologieIndividuelle() || estPhysiotherapie()) max = 100.0;
         else if (estNaturopatieAcuponcture()) max = 65.0;
         else if (estOrthophonieErgotherapie()) max = 90.0;
+        else if (estKinesitherapie()) max = 150;
+        return max;
+    }
+    private double obtenirMaxSelonContratE() {
+        double max = -1;
+        if (estNaturopatieAcuponcture()){
+            max = 15;
+        } else if (estChiropratie() || estMedecinGeneralistePrive()) {
+            max = 20;
+        }
         return max;
     }
     /**
@@ -127,6 +138,7 @@ public class Soin {
             case 'B' -> obtenirPourcentagesContratB();
             case 'C' -> obtenirPourcentagesContratC();
             case 'D' -> obtenirPourcentagesContratD();
+            case 'E' -> obtenirPourcentagesContratE();
             default -> 0.00;
         };
     }
@@ -137,11 +149,12 @@ public class Soin {
      */
     private double obtenirPourcentagesContratA() {
         double pourcentage = 0;
-        if (estMassotherapie() || estOsteopatie()
-                || estPsychologieIndividuelle() || estChiropratie()) pourcentage = 0.25;
-        else if (estSoinsDentaires() || estNaturopatieAcuponcture()
-                || estOrthophonieErgotherapie()) pourcentage = 0;
+        if (estMassotherapie() || estPsychologieIndividuelle() || estChiropratie()) pourcentage = 0.25;
+        else if (estOsteopatie()) pourcentage = 0.35;
         else if (estPhysiotherapie()) pourcentage = 0.40;
+        else if (estMedecinGeneralistePrive()) {
+            pourcentage = 0.50;
+        }
         return pourcentage;
     }
     /**
@@ -154,8 +167,10 @@ public class Soin {
         if (estSoinsDentaires() || estMassotherapie()
                 || estOsteopatie() || estChiropratie()) pourcentage = 0.50;
         else if (estPsychologieIndividuelle() || estPhysiotherapie()) pourcentage = 1.00;
-        else if (estNaturopatieAcuponcture()) pourcentage = 0;
         else if (estOrthophonieErgotherapie()) pourcentage = 0.70;
+        else if (estMedecinGeneralistePrive()) {
+            pourcentage = 0.75;
+        }
         return pourcentage;
     }
     /**
@@ -164,7 +179,15 @@ public class Soin {
      * @return le pourcentage en fonction du contrat C.
      */
     private double obtenirPourcentagesContratC() {
-        return 0.90;
+        double pourcentage = 0.90;
+        if (estKinesitherapie()){
+            pourcentage = 0.85;
+        } else if (estPhysiotherapie()) {
+            pourcentage = 0.75;
+        } else if (estOsteopatie()) {
+            pourcentage = 0.95;
+        }
+        return pourcentage;
     }
     /**
      * Permet d'obtenir le pourcentage parmi les pourcentages
@@ -172,7 +195,33 @@ public class Soin {
      * @return le pourcentage en fonction du contrat D.
      */
     private double obtenirPourcentagesContratD() {
-        return 1.00;
+        double pourcentage =  1.00;
+        if (estMedecinGeneralistePrive()){
+            pourcentage = 0.95;
+        }
+        return pourcentage;
+    }
+
+
+    private double obtenirPourcentagesContratE() {
+        double pourcentage = 0;
+
+        if (estMassotherapie() || estPhysiotherapie()) {
+            pourcentage = 0.15;
+        } else if (estOsteopatie() || estNaturopatieAcuponcture() || estMedecinGeneralistePrive()) {
+            pourcentage = 0.25;
+        } else if (estPsychologieIndividuelle()) {
+            pourcentage = 0.12;
+        } else if (estSoinsDentaires()){
+            pourcentage = 0.60;
+        } else if (estChiropratie()){
+            pourcentage = 0.30;
+        } else if (estOrthophonieErgotherapie()){
+            pourcentage = 0.22;
+        } else if (estKinesitherapie()) {
+            pourcentage = 0.15;
+        }
+        return pourcentage;
     }
 
     /**
@@ -234,6 +283,16 @@ public class Soin {
     private boolean estOrthophonieErgotherapie() {
         return numeroSoin == 700;
     }
+
+    private boolean estKinesitherapie(){
+        return numeroSoin == 150;
+    }
+
+    private boolean estMedecinGeneralistePrive(){
+        return numeroSoin == 175;
+    }
+
+
 
     public long getNumeroSoin() {
         return numeroSoin;
