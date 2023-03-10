@@ -43,8 +43,8 @@ public class Validation {
     }
 
     /**
-     * Cette methode permet de placer dans une variable de classe l'objet JSON se trouvant de le fichier d'entree.
-     * @param obj l'objet JSON se trouvant de le fichier d'entree.
+     * Cette methode permet de placer dans une variable de classe l'objet JSON se trouvant dans le fichier d'entree.
+     * @param obj l'objet JSON se trouvant dans le fichier d'entree.
      */
     private void setReclamationClient(JSONObject obj) {
         this.reclamationClient = obj;
@@ -58,7 +58,7 @@ public class Validation {
         JSONHash test = new JSONHash(nomFichierEntree, nomFichierSortie);
         setValide(test.getFilename().endsWith(".json") && test.getResultat().endsWith(".json"));
         if(!valide)
-            setMessageErreur("N'est pas un fichier JSON");
+            setMessageErreur("Les deux, ou un des fichier n'est pas un fichier ayant l'extension \".json\".");
         return valide;
     }
 
@@ -72,70 +72,68 @@ public class Validation {
                 json.load();
                 setReclamationClient(json.getJsonobj());
             }catch (IOException | ParseException e) {
-                setMessageErreur("Fichier inexistant");
+                setMessageErreur("Le fichier d'entrée est inexistant, ou introuvable.");
             }
         }
     }
 
     /**
-     * Cette methode permet de verifier que le fichier d'entree contient les cles de "client", "contrat",
-     * "mois" et "reclamation" et aucunes autres clés.
+     * Cette methode permet de verifier que le fichier d'entree contient les cles de "dossier","mois" et "reclamation"
+     * et aucunes autres clés.
      */
 
     private void validerLaPresenceDesCles() {
         try {
-            setValide(reclamationClient.get("client") != null && reclamationClient.get("contrat") != null
-                    && reclamationClient.get("mois") != null && reclamationClient.get("reclamations") != null
-                    && reclamationClient.size() == 4);
+            setValide(reclamationClient.get("dossier") != null && reclamationClient.get("mois") != null
+                    && reclamationClient.get("reclamations") != null && reclamationClient.size() == 3);
         } catch (NullPointerException e) {
-            setMessageErreur("Fichier invalide");
+            setMessageErreur("Le fichier d'entrée n'a pas le bon format.");
             setValide(false);
         }
     }
-
-    /**
-     * Cette methode permet de verifier la longueur du numero du client.
-     */
-    private void verifierLongueurNumeroClient(){
-        String numeroClient;
-        if (valide){
-            numeroClient = String.valueOf(reclamationClient.get("client"));
-            if(numeroClient.length() != 6) {
-                setMessageErreur("Numero Client invalide");
-                setValide(false);
-            }
-        }
-    }
-
-    /**
-     * Cette methode permet de valider le numero du client.
-     */
-    private void estNumeroCLientValide () {
-        if(valide) {
-            try {
-                Integer.parseInt(String.valueOf(reclamationClient.get("client")));
-            } catch (NumberFormatException e){
-                setMessageErreur("Numero client invalide");
-                setValide(false);
-            }
-        }
-    }
-
     /**
      * Cette methode permet de valider le type de contrat du client.
      */
     private void estLettreContratValide() {
         if(valide) {
-            String contrat = String.valueOf(reclamationClient.get("contrat"));
-            if (contrat.length() != 1 || contrat.charAt(0) < 'A' || contrat.charAt(0) > 'D') {
-                setMessageErreur("Contrat invalide");
+            String dossier = String.valueOf(reclamationClient.get("dossier"));
+            if ( dossier.charAt(0) < 'A' || dossier.charAt(0) > 'E') {
+                setMessageErreur("La lettre de la matricule du dossier n'est pas valide.");
                 setValide(false);
             }
         }
     }
 
     /**
-     * Cette methode permet de valider que le champs "mois" dans le fichier d'entree respecte le modele demande.
+     * Cette methode permet de verifier la longueur de la matricule du dossier du client.
+     */
+    private void verifierLongueurDossier(){
+        String matriculeDossier;
+        if (valide){
+            matriculeDossier = String.valueOf(reclamationClient.get("dossier"));
+            if(matriculeDossier.length() != 7) {
+                setMessageErreur("La matricule du dossier n'a pas la bonne longueur.");
+                setValide(false);
+            }
+        }
+    }
+
+    /**
+     * Cette methode permet de valider le numero de la matricule du client.
+     */
+    private void estMatriculeDossierValide() {
+        if(valide) {
+            try {
+                Integer.parseInt(String.valueOf(reclamationClient.get("dossier")).substring(1));
+            } catch (NumberFormatException e){
+                setMessageErreur("Les caractères 2 à 7 doivent être des chiffres, aucun autre caractère est accepté.");
+                setValide(false);
+            }
+        }
+    }
+
+    /**
+     * Cette methode permet de valider que le champ "mois" dans le fichier d'entree respecte le modele demande.
      */
     private void estFormatMoisValide() {
         if (valide) {
@@ -148,7 +146,7 @@ public class Validation {
                 setValide(false);
             }
             if (!valide)
-                setMessageErreur("Format mois invalide");
+                setMessageErreur("La valeur de la clé \"mois\" doit avoir le format suivant \"0000-00\".");
         }
     }
     /**
@@ -165,7 +163,7 @@ public class Validation {
                 setValide(false);
             }
             if (!valide || Long.parseLong(mois.substring(0, 4)) < 0 || Long.parseLong(mois.substring(0, 4)) < 1900)
-                setMessageErreur("Annee invalide");
+                setMessageErreur("L'année de la clé \"mois\" doit contenir 4 chiffre et être supérieur à 1900.");
         }
     }
 
@@ -177,7 +175,7 @@ public class Validation {
             String mois = String.valueOf(reclamationClient.get("mois"));
             long moisVerif = Long.parseLong(mois.substring(5));
             if (moisVerif <= 0 || moisVerif > 12) {
-                setMessageErreur("Mois invalide");
+                setMessageErreur("Le mois de la clé \"mois\" doit être entre 0 et 12.");
                 setValide(false);
             }
         }
@@ -193,7 +191,7 @@ public class Validation {
         if (valide) {
             reclamations = (JSONArray) reclamationClient.get("reclamations");
             if (reclamations.isEmpty()) {
-                setMessageErreur("Objet \"reclamations\" vide");
+                setMessageErreur("L'Array \"reclamations\" est vide.");
                 setValide(false);
             }
         }
@@ -201,7 +199,7 @@ public class Validation {
     }
 
     /**
-     * Cette methode permet de s'sssurer que l'array recalamtion contient les cles : "soin", "date" et "montant" et
+     * Cette methode permet de s'assurer que l'array recalamtion contient les cles : "soin", "date" et "montant" et
      * aucunes autres cles.
      *
      * @param obj objet JSON se trouvant dans le fichier d'entree.
@@ -215,8 +213,20 @@ public class Validation {
                         && objet.size() == 3);
                 position++;
             }
-            if(!valide)
-                setMessageErreur("Reclamation(s) invalide(s)");
+        }if(!valide)
+            setMessageErreur("L'array \"réclamations\" contient des champs invalides.");
+    }
+    private void testerLol(JSONArray obj){
+        if (!valide) {
+            for (Object o : obj) {
+                JSONObject objet = (JSONObject) o;
+                if (objet.get("soin") == null)
+                    setMessageErreur("Dans la réclamation " + obj.indexOf(o) + ", le champs soin est invalide.");
+                else if (objet.get("date") == null)
+                    setMessageErreur("Dans la réclamation " + obj.indexOf(o) + ", le champs date est invalide.");
+                else if(objet.get("montant") == null)
+                    setMessageErreur("Dans la réclamation " + obj.indexOf(o) + ", le champs date est invalide.");
+            }
         }
     }
 
@@ -244,7 +254,7 @@ public class Validation {
             position++;
         }
         if (!valide) {
-            setMessageErreur("Format date invalide");
+            setMessageErreur("La longueur de la date dans la réclamation " + position + "est invalide.");
             setValide(false);
         }
     }
@@ -261,7 +271,7 @@ public class Validation {
                 position++;
             }
             if (!valide)
-                setMessageErreur("Mois et date pas equivalent");
+                setMessageErreur("Le champs mois et la date-mois de la réclamation " + position + " ne sont pas égaux.");
         }
     }
 
@@ -275,9 +285,9 @@ public class Validation {
             while(valide && position < obtenirValeur("date").length ) {
                 setValide(obtenirValeur("date")[position].length() == 10
                         && obtenirValeur("date")[position].charAt(7) == '-');
-                if(!valide)
-                    setMessageErreur("Format date invalide");
                 position++;
+                if(!valide)
+                    setMessageErreur("Le format de la date de la réclamation " + position + "n'est pas valide.");
             }
         }
     }
@@ -293,14 +303,14 @@ public class Validation {
                     Long.parseLong(obtenirValeur("date")[i].substring(8));
                 }
             } catch (NumberFormatException e2) {
-                setMessageErreur("Donnees invalides");
+                setMessageErreur("Le jour d'une des réclamations n'est pas un nombre.");
                 setValide(false);
             }
         }
     }
 
     /**
-     * Cette methode permet de valider que le nombre de jour, correspondant aux 2 derniers characteres des valeurs
+     * Cette methode permet de valider que le nombre de jours, correspondant aux 2 derniers characteres des valeurs
      * entrees aux cles "date" dans le JSONArray "reclamations", est inferieur ou egal au nombre de jours maximal du
      * mois donne et superieur a 0.
      */
@@ -314,9 +324,10 @@ public class Validation {
                 //compare avec les deux derniers chiffres des dates.
                 setValide(nbrJours >= Long.parseLong(obtenirValeur("date")[position].substring(8)) &&
                         Long.parseLong(obtenirValeur("date")[position].substring(8)) > 0);
-                if (!valide)
-                    setMessageErreur("Jour invalide");
                 position++;
+                if (!valide)
+                    setMessageErreur("Le nombre de jour entré dans la réclamation " + position
+                            + " est inférieur ou supérieur au nombre maximal de jour du mois.");
             }
         }
     }
@@ -365,7 +376,7 @@ public class Validation {
                     numSoin[i] = Long.parseLong(obtenirValeur("soin")[i]);
                 }
             } catch (NumberFormatException e2) {
-                setMessageErreur("Donnees invalides");
+                setMessageErreur("Un des entrées des champs soin n'est pas un nombre.");
                 setValide(false);
             }
         }
@@ -378,16 +389,18 @@ public class Validation {
     private void estNumeroSoinValide() {
         if (valide && verifierTypeDesSoins() != null) {
             for (long i : verifierTypeDesSoins()) {
-                if (!(i >= 300 && i <= 400) && i != 100 && i != 200 && i != 500 && i != 600 && i != 700) {
+                if (!(i >= 300 && i <= 400) && i != 100 && i != 150 && i != 175 && i != 200 && i != 500 && i != 600
+                        && i != 700) {
                     setValide(false);
-                    setMessageErreur("Donnees invalides");
+                    setMessageErreur("Le numero de soin entré dans la réclamation " + (i + 1)
+                            + " numéros de soin invalides.");
                 }
             }
         }
     }
 
     /**
-     * Cette methode permet de valider que les valeurs associees aux cle "montant" dans le JSONArray  "reclamations"
+     * Cette methode permet de valider que les valeurs associees aux cle "montant" dans le JSONArray "reclamations"
      * se terminent par des signes de dollar ( "$" ).
      */
     public void validerSigneDollar() {
@@ -395,7 +408,8 @@ public class Validation {
         int position = 0;
         while(valide && position < montant.length) {
             if (!montant[position].endsWith("$")) {
-                setMessageErreur("Montant invalide");
+                setMessageErreur("Le montant entré dans la réclamation " + (position + 1)
+                        + " ne se termine pas par un \"$\".");
                 setValide(false);
             }
             position++;
@@ -414,7 +428,7 @@ public class Validation {
             for (int i = 0; i < montant.length; i++) {
                 montant[i] = montant[i].substring(0, montant[i].lastIndexOf("$"));
                 if(montant[i].charAt(0) == '-' ) {
-                    setMessageErreur("Montant invalide");
+                    setMessageErreur("Le montant entré dans la réclamation " + (i + 1) +" est négatif.");
                     setValide(false);
                 }
             }
@@ -432,7 +446,7 @@ public class Validation {
                 try {
                     Float.parseFloat(formaterMontant()[position]);
                 } catch (NumberFormatException e) {
-                    setMessageErreur("Montant invalide");
+                    setMessageErreur("Le montant entré de la réclamation " + (position + 1) + " n'est pas un montant valide.");
                     setValide(false);
                 }
                 position++;
@@ -454,19 +468,23 @@ public class Validation {
                 }
             }
             if (!valide)
-                setMessageErreur("Montant invalide");
+                setMessageErreur("Un des montants entrés n'a pas deux chiffres après la virgule");
         }
     }
 
     /**
-     * Cette methode permet de valider le numero du client.
+     * Cette methode permet de valider la matricule du dossier du client.
      */
-    public void estClientValide() {
+    public void estDossierValide() {
         validerLaPresenceDesCles();
         if (valide) {
-            verifierLongueurNumeroClient();
-            if (valide)
-                estNumeroCLientValide();
+            verifierLongueurDossier();
+            if (valide) {
+                estLettreContratValide();
+                if (valide)
+                    estMatriculeDossierValide();
+            }
+
         }
     }
 
@@ -491,10 +509,12 @@ public class Validation {
     public void estSoinValide() {
         if (valide) {
             validerLaPresenceDesClesRecalmations(obtenirReclamations());
-            if (valide) {
+                if(!valide) {
+                    testerLol(obtenirReclamations());
+                } else {
                 verifierTypeDesSoins();
-                if (valide)
-                    estNumeroSoinValide();
+                    if (valide)
+                        estNumeroSoinValide();
             }
 
         }
@@ -544,8 +564,7 @@ public class Validation {
      */
     public boolean estFichierValide(String nomFichierEntree, String nomFichierSortie) {
         obtenirObjetJSON(nomFichierEntree, nomFichierSortie);
-        estClientValide();
-        estLettreContratValide();
+        estDossierValide();
         estMoisValide();
         estSoinValide();
         estDateValide();
