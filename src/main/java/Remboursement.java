@@ -61,12 +61,13 @@ public class Remboursement {
     }
     public static void outputJSONErreur(String messageErreur) {
         json2.put("message", messageErreur);
+        System.out.println(messageErreur);
     }
     /**
      * Cette méthode permet de formatter la sortie de toutes les données traiter dans le format style JSON
      */
     public static void formatJSON() throws FileNotFoundException {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
         String output = gson.toJson(json2);
         JSONHash.save(output);
     }
