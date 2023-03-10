@@ -8,6 +8,8 @@ public class CompteurDeRemboursement {
     private static double compteurChiro = 0;
     private static double compteurPhysio = 0;
     private static double compteurOrthoErgo = 0;
+    private static double compteurKinesitherapie = 0;
+    private static double compteurMedecinGeneralistePrive = 0;
 
     public void accumuler(long typeSoin, double montantAAdditionner) {
         if (typeSoin == 0) {
@@ -26,6 +28,10 @@ public class CompteurDeRemboursement {
             compteurPhysio = compteurPhysio + montantAAdditionner;
         } else if (typeSoin == 700) {
             compteurOrthoErgo = compteurOrthoErgo + montantAAdditionner;
+        } else if (typeSoin == 150) {
+            compteurKinesitherapie = compteurKinesitherapie + montantAAdditionner;
+        } else if (typeSoin == 175) {
+            compteurMedecinGeneralistePrive = compteurMedecinGeneralistePrive + montantAAdditionner;
         }
     }
 
@@ -47,13 +53,21 @@ public class CompteurDeRemboursement {
             valeurCompteur = compteurPhysio;
         } else if (typeSoin == 700) {
             valeurCompteur = compteurOrthoErgo;
+        } else if (typeSoin == 150) {
+            valeurCompteur = compteurKinesitherapie;
+        } else if (typeSoin == 175) {
+            valeurCompteur = compteurMedecinGeneralistePrive;
         }
         return valeurCompteur;
     }
 
-    //TODO ajouter les nouveaux types de soins en temps et lieu
+    /**
+     * Retourne le montant total rembourse dans tous les soins
+     * @return le montant total Rembourse
+     */
     public double getTotalRembourse(){
-        return compteurMasso + compteurOsteo + compteurPsycho + compteurDentaire +
-                compteurNaturoAcu + compteurChiro + compteurPhysio + compteurOrthoErgo;
+        return compteurMasso + compteurOsteo + compteurPsycho + compteurDentaire
+                + compteurNaturoAcu + compteurChiro + compteurPhysio + compteurOrthoErgo
+                + compteurKinesitherapie + compteurMedecinGeneralistePrive;
     }
 }
