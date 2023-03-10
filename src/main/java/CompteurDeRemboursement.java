@@ -9,23 +9,23 @@ public class CompteurDeRemboursement {
     private static double compteurPhysio = 0;
     private static double compteurOrthoErgo = 0;
 
-    public void accumuler(long typeSoin, double montantACumuler) {
+    public void accumuler(long typeSoin, double montantAAdditionner) {
         if (typeSoin == 0) {
-            compteurMasso = compteurMasso + montantACumuler;
+            compteurMasso = compteurMasso + montantAAdditionner;
         } else if (typeSoin == 100) {
-            compteurOsteo = compteurOsteo + montantACumuler;
+            compteurOsteo = compteurOsteo + montantAAdditionner;
         } else if (typeSoin == 200) {
-            compteurPsycho = compteurPsycho + montantACumuler;
+            compteurPsycho = compteurPsycho + montantAAdditionner;
         } else if (typeSoin >= 300 && typeSoin <= 399) {
-            compteurDentaire = compteurDentaire + montantACumuler;
+            compteurDentaire = compteurDentaire + montantAAdditionner;
         } else if (typeSoin == 400) {
-            compteurNaturoAcu = compteurNaturoAcu + montantACumuler;
+            compteurNaturoAcu = compteurNaturoAcu + montantAAdditionner;
         } else if (typeSoin == 500) {
-            compteurChiro = compteurChiro + montantACumuler;
+            compteurChiro = compteurChiro + montantAAdditionner;
         } else if (typeSoin == 600) {
-            compteurPhysio = compteurPhysio + montantACumuler;
+            compteurPhysio = compteurPhysio + montantAAdditionner;
         } else if (typeSoin == 700) {
-            compteurOrthoErgo = compteurOrthoErgo + montantACumuler;
+            compteurOrthoErgo = compteurOrthoErgo + montantAAdditionner;
         }
     }
 
@@ -49,5 +49,11 @@ public class CompteurDeRemboursement {
             valeurCompteur = compteurOrthoErgo;
         }
         return valeurCompteur;
+    }
+
+    //TODO ajouter les nouveaux types de soins en temps et lieu
+    public double getTotalRembourse(){
+        return compteurMasso + compteurOsteo + compteurPsycho + compteurDentaire +
+                compteurNaturoAcu + compteurChiro + compteurPhysio + compteurOrthoErgo;
     }
 }
