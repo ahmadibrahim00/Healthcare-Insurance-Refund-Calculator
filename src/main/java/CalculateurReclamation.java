@@ -31,7 +31,7 @@ public class CalculateurReclamation {
         ArrayList<Soin> reclamation = new ArrayList();
 
         for (int i = 0; i < JSON.getNbSoin(); ++i) {
-            reclamation.add(new Soin(JSON.getNumClient(), JSON.getContrat(), JSON.getMois(), JSON.getSoin(i),
+            reclamation.add(new Soin(JSON.getNumDossier(), JSON.getContrat(), JSON.getMois(), JSON.getSoin(i),
                     JSON.getDate(i), (double) JSON.getMontant(i)));
         }
         return reclamation;
