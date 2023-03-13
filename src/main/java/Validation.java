@@ -87,9 +87,11 @@ public class Validation {
             setValide(reclamationClient.get("dossier") != null && reclamationClient.get("mois") != null
                     && reclamationClient.get("reclamations") != null && reclamationClient.size() == 3);
         } catch (NullPointerException e) {
-            setMessageErreur("Le fichier d'entrée n'a pas le bon format.");
+            setMessageErreur("Le fichier d'entrée n'a pas toutes les clés nécessaires.");
             setValide(false);
         }
+        if (!valide)
+            setMessageErreur("Le fichier d'entrée n'a pas toutes les clés nécessaires ou a des entrées superflues.");
     }
     /**
      * Cette methode permet de valider le type de contrat du client.
@@ -204,7 +206,7 @@ public class Validation {
      *
      * @param obj objet JSON se trouvant dans le fichier d'entree.
      */
-    private void validerLaPresenceDesClesRecalmations(JSONArray obj) {
+    private void validerLaPresenceDesClesReclamations(JSONArray obj) {
         if(valide) {
             int position = 0 ;
             while ( valide && position < obj.size() ){
@@ -216,16 +218,23 @@ public class Validation {
         }if(!valide)
             setMessageErreur("L'array \"réclamations\" contient des champs invalides.");
     }
-    private void testerLol(JSONArray obj){
+
+    /**
+     * Cette méthode permet à envoyer le bon message d'erreur lorsqu'il y a des champs invalides ou manquants dans
+     * l'array réclamations.
+     * @param reclamations l'array contenant les réclamations du client.
+     */
+
+    private void estDateInvalide(JSONArray reclamations){
         if (!valide) {
-            for (Object o : obj) {
+            for (Object o : reclamations) {
                 JSONObject objet = (JSONObject) o;
                 if (objet.get("soin") == null)
-                    setMessageErreur("Dans la réclamation " + obj.indexOf(o) + ", le champs soin est invalide.");
+                    setMessageErreur("Dans la réclamation " + reclamations.indexOf(o) + ", le champs soin est invalide.");
                 else if (objet.get("date") == null)
-                    setMessageErreur("Dans la réclamation " + obj.indexOf(o) + ", le champs date est invalide.");
+                    setMessageErreur("Dans la réclamation " + reclamations.indexOf(o) + ", le champs date est invalide.");
                 else if(objet.get("montant") == null)
-                    setMessageErreur("Dans la réclamation " + obj.indexOf(o) + ", le champs date est invalide.");
+                    setMessageErreur("Dans la réclamation " + reclamations.indexOf(o) + ", le champs montant est invalide.");
             }
         }
     }
@@ -403,7 +412,7 @@ public class Validation {
      * Cette methode permet de valider que les valeurs associees aux cle "montant" dans le JSONArray "reclamations"
      * se terminent par des signes de dollar ( "$" ).
      */
-    public void validerSigneDollar() {
+    private void validerSigneDollar() {
         String [] montant = obtenirValeur("montant");
         int position = 0;
         while(valide && position < montant.length) {
@@ -475,7 +484,7 @@ public class Validation {
     /**
      * Cette methode permet de valider la matricule du dossier du client.
      */
-    public void estDossierValide() {
+    private void estDossierValide() {
         validerLaPresenceDesCles();
         if (valide) {
             verifierLongueurDossier();
@@ -491,7 +500,7 @@ public class Validation {
     /**
      * Cette methode permet de valider le mois.
      */
-    public void estMoisValide() {
+    private void estMoisValide() {
         if (valide) {
             estFormatMoisValide();
             if (valide) {
@@ -506,11 +515,11 @@ public class Validation {
     /**
      * Cette methode permet de valider les soins.
      */
-    public void estSoinValide() {
+    private void estSoinValide() {
         if (valide) {
-            validerLaPresenceDesClesRecalmations(obtenirReclamations());
+            validerLaPresenceDesClesReclamations(obtenirReclamations());
                 if(!valide) {
-                    testerLol(obtenirReclamations());
+                    estDateInvalide(obtenirReclamations());
                 } else {
                 verifierTypeDesSoins();
                     if (valide)
@@ -523,7 +532,7 @@ public class Validation {
     /**
      * Cette methode permet de valider les dates.
      */
-    public void estDateValide() {
+    private void estDateValide() {
         if (valide) {
             verifieLongueurDate();
             if (valide) {
@@ -544,7 +553,7 @@ public class Validation {
     /**
      * Cette methode permet de valider les montants.
      */
-    public void estMontantValide() {
+    private void estMontantValide() {
         if (valide) {
             validerSigneDollar();
             if (valide) {
