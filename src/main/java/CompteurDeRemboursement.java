@@ -1,42 +1,42 @@
 public class CompteurDeRemboursement {
 
-    private static double compteurMasso = 0;
-    private static double compteurOsteo = 0;
-    private static double compteurPsycho = 0;
-    private static double compteurDentaire = 0;
-    private static double compteurNaturoAcu = 0;
-    private static double compteurChiro = 0;
-    private static double compteurPhysio = 0;
-    private static double compteurOrthoErgo = 0;
-    private static double compteurKinesitherapie = 0;
-    private static double compteurMedecinGeneralistePrive = 0;
+    private static Monnaie compteurMasso = new Monnaie(0);
+    private static Monnaie compteurOsteo = new Monnaie(0);
+    private static Monnaie compteurPsycho = new Monnaie(0);
+    private static Monnaie compteurDentaire = new Monnaie(0);
+    private static Monnaie compteurNaturoAcu = new Monnaie(0);
+    private static Monnaie compteurChiro = new Monnaie(0);
+    private static Monnaie compteurPhysio = new Monnaie(0);
+    private static Monnaie compteurOrthoErgo = new Monnaie(0);
+    private static Monnaie compteurKinesitherapie = new Monnaie(0);
+    private static Monnaie compteurMedecinGeneralistePrive = new Monnaie(0);
 
-    public void accumuler(long typeSoin, double montantAAdditionner) {
+    public void accumuler(long typeSoin, Monnaie montantAAdditionner) {
         if (typeSoin == 0) {
-            compteurMasso = compteurMasso + montantAAdditionner;
+            compteurMasso = compteurMasso.ajouter(montantAAdditionner);
         } else if (typeSoin == 100) {
-            compteurOsteo = compteurOsteo + montantAAdditionner;
+            compteurOsteo = compteurOsteo.ajouter(montantAAdditionner);
         } else if (typeSoin == 200) {
-            compteurPsycho = compteurPsycho + montantAAdditionner;
+            compteurPsycho = compteurPsycho.ajouter(montantAAdditionner);
         } else if (typeSoin >= 300 && typeSoin <= 399) {
-            compteurDentaire = compteurDentaire + montantAAdditionner;
+            compteurDentaire = compteurDentaire.ajouter(montantAAdditionner);
         } else if (typeSoin == 400) {
-            compteurNaturoAcu = compteurNaturoAcu + montantAAdditionner;
+            compteurNaturoAcu = compteurNaturoAcu.ajouter(montantAAdditionner);
         } else if (typeSoin == 500) {
-            compteurChiro = compteurChiro + montantAAdditionner;
+            compteurChiro = compteurChiro.ajouter(montantAAdditionner);
         } else if (typeSoin == 600) {
-            compteurPhysio = compteurPhysio + montantAAdditionner;
+            compteurPhysio = compteurPhysio.ajouter(montantAAdditionner);
         } else if (typeSoin == 700) {
-            compteurOrthoErgo = compteurOrthoErgo + montantAAdditionner;
+            compteurOrthoErgo = compteurOrthoErgo.ajouter(montantAAdditionner);
         } else if (typeSoin == 150) {
-            compteurKinesitherapie = compteurKinesitherapie + montantAAdditionner;
+            compteurKinesitherapie = compteurKinesitherapie.ajouter(montantAAdditionner);
         } else if (typeSoin == 175) {
-            compteurMedecinGeneralistePrive = compteurMedecinGeneralistePrive + montantAAdditionner;
+            compteurMedecinGeneralistePrive = compteurMedecinGeneralistePrive.ajouter(montantAAdditionner);
         }
     }
 
-    public double getCompteur(long typeSoin) {
-        double valeurCompteur = 0;
+    public Monnaie getCompteur(long typeSoin) {
+        Monnaie valeurCompteur = new Monnaie(0);
         if (typeSoin == 0) {
             valeurCompteur = compteurMasso;
         } else if (typeSoin == 100) {
@@ -65,9 +65,9 @@ public class CompteurDeRemboursement {
      * Retourne le montant total rembourse dans tous les soins
      * @return le montant total Rembourse
      */
-    public double getTotalRembourse(){
-        return compteurMasso + compteurOsteo + compteurPsycho + compteurDentaire
-                + compteurNaturoAcu + compteurChiro + compteurPhysio + compteurOrthoErgo
-                + compteurKinesitherapie + compteurMedecinGeneralistePrive;
+    public Monnaie getTotalRembourse(){
+        return compteurMasso.ajouter(compteurOsteo).ajouter(compteurPsycho).ajouter(compteurDentaire)
+                .ajouter(compteurNaturoAcu).ajouter(compteurChiro).ajouter(compteurPhysio).ajouter(compteurOrthoErgo)
+                .ajouter(compteurKinesitherapie).ajouter(compteurMedecinGeneralistePrive);
     }
 }

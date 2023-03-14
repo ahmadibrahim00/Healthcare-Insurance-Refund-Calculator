@@ -10,7 +10,7 @@ import org.json.simple.parser.ParseException;
 
 public class CalculateurReclamation {
 
-    static ArrayList<Double> montantsRembourses;
+    static ArrayList<Monnaie> montantsRembourses;
     private static String fichierEntree;
     private static String fichierSortie;
 
@@ -32,7 +32,7 @@ public class CalculateurReclamation {
 
         for (int i = 0; i < JSON.getNbSoin(); ++i) {
             reclamation.add(new Soin(JSON.getNumDossier(), JSON.getContrat(), JSON.getMois(), JSON.getSoin(i),
-                    JSON.getDate(i), (double) JSON.getMontant(i)));
+                    JSON.getDate(i), new Monnaie((double) JSON.getMontant(i))));
         }
         return reclamation;
     }
@@ -44,8 +44,8 @@ public class CalculateurReclamation {
      * @throws IOException
      * @throws ParseException
      */
-    public static ArrayList<Double> ecrireSoinsRembourses() throws IOException, ParseException {
-        ArrayList<Double> soinsRembourses = new ArrayList<>();
+    public static ArrayList<Monnaie> ecrireSoinsRembourses() throws IOException, ParseException {
+        ArrayList<Monnaie> soinsRembourses = new ArrayList<>();
         for (int i = 0; i < genererReclamation().size(); ++i) {
             soinsRembourses.add(genererReclamation().get(i).calculerRemboursement());
         }
