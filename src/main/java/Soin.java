@@ -5,7 +5,9 @@
  * @version 12 février 2023
  */
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.Currency;
 
 public class Soin {
     private long client;
@@ -13,11 +15,11 @@ public class Soin {
     private String dateReclamation;
     private long numeroSoin;
     private String dateSoin;
-    private double prixSoin;
+    private Monnaie prixSoin;
     CompteurDeRemboursement dejaRembourse = new CompteurDeRemboursement();
 
     public Soin(long client, char typeContrat, String dateReclamation,
-                long numeroSoin, String dateSoin, double prixSoin) {
+                long numeroSoin, String dateSoin, Monnaie prixSoin) {
         this.client = client;
         this.typeContrat = typeContrat;
         this.dateReclamation = dateReclamation;
@@ -30,16 +32,16 @@ public class Soin {
      * Calcule le montant a rembourser pour chaque soins en fonction du maximum par type de soin
      * @return le montant a rembourser
      */
-    public double calculerRemboursement(){
-        double montantRembourse = 0;
-       if (maxExiste() && dejaRembourse.getCompteur(numeroSoin) >= trouverMax()){
-           montantRembourse = 0;
-       } else if (maxExiste() && dejaRembourse.getCompteur(numeroSoin) + calculerMontantAvantMax() >= trouverMax()){
-           montantRembourse = trouverMax() - dejaRembourse.getCompteur(numeroSoin);
+    public Monnaie calculerRemboursement(){
+        Monnaie montantRembourse = new Monnaie(0);
+       if (maxExiste() && dejaRembourse.getCompteur(numeroSoin).plusGrandOuEgal(trouverMax())){
+           montantRembourse = new Monnaie(0);
+       } else if (maxExiste() && dejaRembourse.getCompteur(numeroSoin).ajouter(calculerMontantAvantMax()).plusGrandOuEgal(trouverMax())){
+           montantRembourse = trouverMax().soustraire(dejaRembourse.getCompteur(numeroSoin));
        } else {
            montantRembourse = calculerMontantAvantMax();
        }
-        if(montantRembourse < 0) montantRembourse = 0;
+        if(montantRembourse.plusPetitQue(new Monnaie(0))) montantRembourse = new Monnaie(0);
         dejaRembourse.accumuler(numeroSoin, montantRembourse);
         return montantRembourse;
     }
@@ -48,7 +50,7 @@ public class Soin {
      * Permet d'obtenir le maximum selon le type de contrat associe a la reclamation.
      * @return le maximum remboursable.
      */
-    private double trouverMax() {
+    private Monnaie trouverMax() {
         return switch (typeContrat) {
             case 'A' -> obtenirMaxSelonContratA();
             case 'B' -> obtenirMaxSelonContratB();
@@ -56,7 +58,7 @@ public class Soin {
             case 'D' -> obtenirMaxSelonContratD();
             case 'E' -> obtenirMaxSelonContratE();
 
-            default -> -1;
+            default -> new Monnaie(-1);
         };
     }
     /**
@@ -64,15 +66,15 @@ public class Soin {
      * @return Vrai si le contrat admet un maximum, faux sinon.
      */
     private boolean maxExiste() {
-        return !(trouverMax() == -1);
-    }
+        return !(trouverMax().egal(new Monnaie(-1)));
+    } //TODO
     /**
      * Permet d'obtenir le maximum parmi les maximums
      * correspondant au contrat A en fonction du type de soin.
      * @return le maximum en fonction du contrat A.
      */
-    private double obtenirMaxSelonContratA() {
-        return -1;
+    private Monnaie obtenirMaxSelonContratA() {
+        return new Monnaie(-1);
     }
 
     /**
@@ -80,10 +82,10 @@ public class Soin {
      * correspondant au contrat B en fonction du type de soin.
      * @return le maximum en fonction du contrat B.
      */
-    private double obtenirMaxSelonContratB() {
-        double max = -1;
-        if (estMassotherapie()) max = 40.0;
-        else if (estOsteopatie() || estChiropratie()) max = 50.0;
+    private Monnaie obtenirMaxSelonContratB() {
+        Monnaie max = new Monnaie(-1);
+        if (estMassotherapie()) max = new Monnaie(40);
+        else if (estOsteopatie() || estChiropratie()) max = new Monnaie(50);
         return max;
     }
     /**
@@ -91,30 +93,30 @@ public class Soin {
      * correspondant au contrat C en fonction du type de soin.
      * @return le maximum en fonction du contrat C.
      */
-    private double obtenirMaxSelonContratC() {
-        return -1;
+    private Monnaie obtenirMaxSelonContratC() {
+        return new Monnaie(-1);
     }
     /**
      * Permet d'obtenir le maximum parmi les maximums
      * correspondant au contrat D en fonction du type de soin.
      * @return le maximum en fonction du contrat D.
      */
-    private double obtenirMaxSelonContratD() {
-        double max = -1;
-        if (estMassotherapie()) max = 85.0;
-        else if (estOsteopatie()) max = 75.0;
-        else if (estPsychologieIndividuelle() || estPhysiotherapie()) max = 100.0;
-        else if (estNaturopatieAcuponcture()) max = 65.0;
-        else if (estOrthophonieErgotherapie()) max = 90.0;
-        else if (estKinesitherapie()) max = 150;
+    private Monnaie obtenirMaxSelonContratD() {
+        Monnaie max = new Monnaie(-1);
+        if (estMassotherapie()) max = new Monnaie(85.0);
+        else if (estOsteopatie()) max = new Monnaie(75.0);
+        else if (estPsychologieIndividuelle() || estPhysiotherapie()) max = new Monnaie(100.0);
+        else if (estNaturopatieAcuponcture()) max = new Monnaie(65.0);
+        else if (estOrthophonieErgotherapie()) max = new Monnaie(90.0);
+        else if (estKinesitherapie()) max = new Monnaie(150);
         return max;
     }
-    private double obtenirMaxSelonContratE() {
-        double max = -1;
+    private Monnaie obtenirMaxSelonContratE() {
+        Monnaie max = new Monnaie(-1);
         if (estNaturopatieAcuponcture()){
-            max = 15;
+            max = new Monnaie(15);
         } else if (estChiropratie() || estMedecinGeneralistePrive()) {
-            max = 20;
+            max = new Monnaie(20);
         }
         return max;
     }
@@ -122,9 +124,9 @@ public class Soin {
      * Calcule le montant a rembourser sans prendre en compte le maximum
      * @return Le montant a rembourser avant prise en compte du maximum
      */
-    private double calculerMontantAvantMax() {
-        double montantAvantMax;
-        montantAvantMax = obtenirPourcentageSelonContratActif() * prixSoin;
+    private Monnaie calculerMontantAvantMax() {
+        Monnaie montantAvantMax;
+        montantAvantMax =  prixSoin.multiplier(obtenirPourcentageSelonContratActif());
         return montantAvantMax;
     }
 
@@ -308,8 +310,7 @@ public class Soin {
      * @return String prixSoin formate
      */
     public String toStringPrixSoin() {
-    DecimalFormat decimalFormat = new DecimalFormat("0.00");
-    return decimalFormat.format(prixSoin) + "$";
+    return (prixSoin.toString()) + "$";
     }
 
     public char getTypeContrat() {
