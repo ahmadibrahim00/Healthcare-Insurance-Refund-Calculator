@@ -39,7 +39,7 @@ public class Monnaie {
     }
 
    // public static void main(String[] args)
-    {
+    //{
         //Monnaie m1 = new Monnaie(120.21); // $120.21
         //Monnaie m2 = new Monnaie(59.99); // $59.99
         //Monnaie m3 = new Monnaie(1000.00); // $1000.00
@@ -65,5 +65,5 @@ public class Monnaie {
         //System.out.println(r); // Affiche : $40.07
 
 
-    }
+    //}
 }
