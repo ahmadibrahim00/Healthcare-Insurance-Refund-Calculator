@@ -1,92 +1,44 @@
-import org.junit.jupiter.api.*;
+import org.junit.Test;
 
-import java.math.BigDecimal;
-import java.util.Currency;
+import static org.junit.Assert.assertEquals;
 
-import static org.junit.jupiter.api.Assertions.*;
+public class MonnaieTest {
 
-
-class MonnaieTest {
-
-    Monnaie un ;
-    Monnaie deux;
-    Monnaie trois;
-    Monnaie six;
-
-
-    @BeforeEach
-    void setUp() {
-        // Exécutée avant chaque test.
-        un = new Monnaie(new BigDecimal("1"), Currency.getInstance("CAD"));
-        deux = new Monnaie(new BigDecimal("2"), Currency.getInstance("CAD"));
-        trois = new Monnaie(new BigDecimal("3"), Currency.getInstance("CAD"));
-        six = new Monnaie(new BigDecimal("6"), Currency.getInstance("CAD"));
-    }
-
-    @AfterEach
-    void tearDown() {
-        // Exécutée après chaque test
-        un = null;
-        deux = null;
-        trois = null;
-        six = null;
+    @Test
+    public void testConstruction() {
+        Monnaie m = new Monnaie(10.50);
+        assertEquals("$10.50", m.toString());
     }
 
     @Test
-    void testToString() {
-        String expected = "1.00$";
-        String actual = un.toString();
-        assertEquals(expected, actual);
+    public void testAddition() {
+        Monnaie m1 = new Monnaie(10.50);
+        Monnaie m2 = new Monnaie(23.75);
+        Monnaie m3 = m1.ajouter(m2);
+        assertEquals("$34.25", m3.toString());
     }
 
     @Test
-    void testToString1() {
-        String expected = "2$";
-        String actual = un.toString();
-        assertNotEquals(expected, actual);
+    public void testSoustraction() {
+        Monnaie m1 = new Monnaie(10.50);
+        Monnaie m2 = new Monnaie(23.75);
+        Monnaie m3 = m2.soustraire(m1);
+        assertEquals("$13.25", m3.toString());
     }
 
     @Test
-    @DisplayName("Additionne deux nombres")
-    void additionner() {
-
-        assertEquals("3.00$", un.addition(deux));
+    public void testMultiplication() {
+        Monnaie m1 = new Monnaie(10.50);
+        Monnaie m2 = m1.multiplier(2.5);
+        assertEquals("$26.25", m2.toString());
     }
 
     @Test
-    void soustraction_valide() throws IllegalArgumentException {
-        assertEquals("1.00$", trois.soustraction(deux));
+    public void testDivision() {
+        Monnaie m1 = new Monnaie(10.22);
+        Monnaie m2 = m1.diviser(3);
+        assertEquals("$3.41", m2.toString());
     }
 
-    @Test
-    void soustraction_invalide()  {
-        assertThrows(IllegalArgumentException.class, () -> {
-            deux.soustraction(trois);
-        });
-    }
-
-    @Test
-    void multiplier() {
-        assertEquals("6.00$", deux.multiplication(trois.getValeur()));
-    }
-
-
-    @Test
-    @DisplayName("Rejette les strings qui ne sont pas nombres")
-    void interceptStrings() {
-        assertThrows(NumberFormatException.class, () -> {
-            new Monnaie(new BigDecimal("asd"), Currency.getInstance("CAD"));
-        });
-    }
-
-    @Test
-    @DisplayName("Accepte les strings qui représentent des nombres")
-    void interceptNombres() {
-        assertAll("nombres entiers",
-                () -> assertNotNull(new Monnaie(new BigDecimal("6"), Currency.getInstance("CAD"))),
-                () -> assertNotNull(new Monnaie(new BigDecimal("20"), Currency.getInstance("CAD"))),
-                () -> assertNotNull(new Monnaie(new BigDecimal("10"), Currency.getInstance("CAD")))
-        );
-    }
 
 }

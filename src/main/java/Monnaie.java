@@ -1,68 +1,69 @@
 import java.math.BigDecimal;
-import java.util.Currency;
+import java.math.RoundingMode;
 
-public class Monnaie
-{
-    private final BigDecimal valeur;
-    private final Currency devise;
+public class Monnaie {
+    private BigDecimal valeurEnCents;
 
-    public Monnaie(BigDecimal valeur, Currency devise) {
-        this.valeur = valeur.setScale(devise.getDefaultFractionDigits(), BigDecimal.ROUND_HALF_UP);
-        this.devise = devise;
+    public Monnaie(double montant) {
+        this.valeurEnCents = BigDecimal.valueOf(montant * 100).setScale(0, RoundingMode.HALF_UP);
+    }
+
+    public Monnaie ajouter(Monnaie autre) {
+        BigDecimal somme = this.valeurEnCents.add(autre.valeurEnCents);
+        return new Monnaie(somme.divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP).doubleValue());
+    }
+
+    public Monnaie soustraire(Monnaie autre) {
+        BigDecimal difference = this.valeurEnCents.subtract(autre.valeurEnCents);
+        return new Monnaie(difference.divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP).doubleValue());
+    }
+
+    public Monnaie multiplier(double facteur) {
+        BigDecimal produit = this.valeurEnCents.multiply(BigDecimal.valueOf(facteur));
+        return new Monnaie(produit.divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP).doubleValue());
+    }
+
+    public Monnaie diviser(double diviseur) {
+        BigDecimal quotient = this.valeurEnCents.divide(BigDecimal.valueOf(diviseur), 2, RoundingMode.HALF_UP);
+        return new Monnaie(quotient.divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP).doubleValue());
+    }
+
+    public int compareTo(Monnaie autre) {
+        return this.valeurEnCents.compareTo(autre.valeurEnCents);
     }
 
     @Override
-    public String toString(){
-
-        return this.valeur + "$";
+    public String toString() {
+        BigDecimal valeurEnDollars = this.valeurEnCents.divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
+        return String.valueOf(valeurEnDollars);
     }
 
-
-    public BigDecimal getValeur() {
-        return valeur;
-    }
-
-    public Currency getDevise() {
-        return devise;
-    }
-
-    public String addition(Monnaie autre) {
-        verifierOperandes(autre);
-        return String.valueOf(new Monnaie(valeur.add(autre.valeur), devise));
-    }
-
-    public String soustraction(Monnaie autre) {
-        verifierOperandes(autre);
-        return String.valueOf(new Monnaie(valeur.subtract(autre.valeur), devise));
-    }
-
-    public String multiplication(BigDecimal factor) {
-        return String.valueOf(new Monnaie(valeur.multiply(factor), devise));
-    }
-
-    public String division(BigDecimal divisor) {
-        return String.valueOf(new Monnaie(valeur.divide(divisor, devise.getDefaultFractionDigits(), BigDecimal.ROUND_HALF_UP), devise));
-    }
-
-
-    private void verifierOperandes(Monnaie autre) throws IllegalArgumentException {
-
-        if (this.valeur.compareTo(autre.valeur) < 0) {
-
-            throw new IllegalArgumentException("Opération impossible : "
-                    + this.valeur + " - " + autre.valeur);
-        }
-    }
-
-        //public static void main (String[] args)
+   // public static void main(String[] args)
     //{
-        //Monnaie money = new Monnaie(new BigDecimal("1"), Currency.getInstance("CAD"));
-        //Monnaie result = money.addition(new Monnaie(new BigDecimal("3"), Currency.getInstance("CAD")));
+        //Monnaie m1 = new Monnaie(120.21); // $120.21
+        //Monnaie m2 = new Monnaie(59.99); // $59.99
+        //Monnaie m3 = new Monnaie(1000.00); // $1000.00
+
+// Ajouter deux montants
+        //Monnaie somme = m1.ajouter(m2);
+        //double q = Double.valueOf(String.valueOf(somme));
+        //System.out.println(q); // Affiche : $180.20
+
+// Soustraire deux montants
+        //Monnaie difference = m3.soustraire(m1);
+        //double w = Double.valueOf(String.valueOf(difference));
+        //System.out.println(w); // Affiche : $879.79
+
+// Multiplier un montant par un facteur
+        //Monnaie produit = m2.multiplier(2);
+        //double e = Double.valueOf(String.valueOf(produit));
+        //System.out.println(e); // Affiche : $119.98
+
+// Diviser un montant par un diviseur, avec arrondi
+        //Monnaie quotient = m1.diviser(3);
+        //double r = Double.valueOf(String.valueOf(quotient));
+        //System.out.println(r); // Affiche : $40.07
 
 
-        //DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
-        //String formattedValue = decimalFormat.format(result.getValeur());
-
-        //System.out.println(formattedValue + " " + result.getDevise().getSymbol());    }
-
+    //}
 }
