@@ -32,6 +32,28 @@ public class Monnaie {
         return this.valeurEnCents.compareTo(autre.valeurEnCents);
     }
 
+    public boolean plusGrandQue(Monnaie autre) {
+        return this.valeurEnCents.compareTo(autre.valeurEnCents) > 0;
+    }
+
+    public boolean plusPetitQue(Monnaie autre) {
+        return this.valeurEnCents.compareTo(autre.valeurEnCents) < 0;
+    }
+
+    public boolean plusGrandOuEgal(Monnaie autre) {
+        return this.valeurEnCents.compareTo(autre.valeurEnCents) > 0
+                || this.valeurEnCents.compareTo(autre.valeurEnCents) == 0;
+    }
+
+    public boolean plusPetitOuEgal(Monnaie autre) {
+        return this.valeurEnCents.compareTo(autre.valeurEnCents) < 0
+                || this.valeurEnCents.compareTo(autre.valeurEnCents) == 0;
+    }
+
+    public boolean egal(Monnaie autre) {
+        return this.valeurEnCents.compareTo(autre.valeurEnCents) == 0;
+    }
+
     @Override
     public String toString() {
         BigDecimal valeurEnDollars = this.valeurEnCents.divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
