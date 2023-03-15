@@ -63,9 +63,7 @@ public class JSONHash {
     public long getNumDossier() {
         String client = (String) jsonobj.get("dossier");
         String client1 = client.replaceAll("[^0-9]", "");
-        Long numDossier = Long.valueOf(client1);
-        System.out.println(numDossier);
-        return numDossier;
+        return Long.parseLong(client1);
     }
 
 
@@ -74,16 +72,13 @@ public class JSONHash {
      */
     public char getContrat() {
         String contrat = (String) jsonobj.get("dossier");
-        char lettrecontrat = contrat.charAt(0);
-        System.out.println(lettrecontrat);
-        return lettrecontrat;
+        return contrat.charAt(0);
     }
     /**
      * Cette méthode va chercher le mois du contrat
      */
     public String getMois() {
-        String mois = (String) jsonobj.get("mois");
-        return mois;
+        return (String) jsonobj.get("mois");
     }
     /**
      * Cette méthode va chercher le numéro du soin du contrat
