@@ -1,4 +1,4 @@
-# Projet de session : Demande initiale
+# Projet de session : Demande de changement #1
 
 ## Technologies présentes :
 
@@ -10,26 +10,33 @@ Tout le code a été écrit avec le langage de programmation Java (JDK19).
 
 Ce programme a été fait entièrement avec l'IDE IntelliJ IDEA 2022.3, et les instructions pour exécuter le programme sont écrites en s'appuyant sur les menus et fonctionnalités de cet IDE.
 
+### Gestion du projet
+
+Ce programme utilise maven pour gérer les dépendances et le projet en tant que tel. On garantit que le projet fonctionne 
+avec maven 3.8.1 et les versions plus récentes. Donc, nous encourageons d'utiliser maven 3.8.1 ou une version plus récente.
+
 ## Pour executer le programme :
 
-### Ajout des dependances : 
+### Fichier d'entrée valide
 
-- `File > Project Structures > Modules > + (add) > JAR or directories` ajouter :
-  - "json-20220924.jar" https://mvnrepository.com/artifact/org.json/json/20220924
-  - "json-lib-2.4-jdk15.jar" : http://www.java2s.com/Code/Jar/j/Downloadjsonlib24jdk15jar.htm
-  - "json-simple-1.1.1.jar" : https://code.google.com/archive/p/json-simple/downloads
-  - "gson-2.10.1.jar" : https://search.maven.org/artifact/com.google.code.gson/gson/2.10.1/jar
+Le fichier d'entrée, contenant les informations du client et des réclamations doivent respecter la structure du fichier 
+"Assurance.json" dans la racine du projet. S'il y a des champs manquants, que les données ne respectent pas les formats, qu'il
+y a des données erronées ou que le fichier n'a pas l'extension ".json", le fichier de sortie contiendra un message d'erreur
+significatif.
 
-### Ensuite, pour creer l'archive executable :
 
-- `File > Project Structures > Artifacts > + (add) > JAR > From modules and dependencies > Main class : "Main.java"`
+### Executer le projet avec la ligne de commande
 
-- `Build > Build Artifacts >  Build`
-
-### Executer le .jar
-- Allez a l'emplacement du .jar dans le terminal : 
-inf2050-hiv2023-projet-equipe17/out/artifacts/Refund_jar
-- ajoutez le fichier Reclamation a ce repoertoire
-- Ensuite, dans la ligne de commande, à l’emplacement du .jar, exécutez la commande suivante : 
-
-- `java -jar Refund.jar Reclamation.json Remboursement.json`
+Les noms de répertoires, du fichier d'entrée et du fichier de sortie peuvent être différents, ils servent seulement d'exemple pour montrer comment
+le projet doit être exécuté avec la ligne de commande.
+- Une fois le projet télécharger sur votre ordinateur, il faut se déplacer dans le root directory du projet.
+- `cd "C:\Users\monNom\projet"`
+- Ensuite, on entre les commandes suivantes successivement :
+- `mvn clean`
+- Pour supprimer les fichiers créés par maven lors d'exécutions passées, pour pouvoir mettre les dépendances et le projet
+à jour.
+- `mvn package`
+- Pour build le projet, donc compiler les fichiers .java, exécuter les tests, créer Remboursement.jar, etc. 
+- `java -jar "target\Remboursement.jar" "Reclamation.json" "Remboursement.json"`
+- Puis finalement on exécute le programme et un fichier "Remboursement.json" est créé et placé dans le root directory du projet, 
+contenant soit un fichier contenant les montant à rembourser ou un message d'erreur.
