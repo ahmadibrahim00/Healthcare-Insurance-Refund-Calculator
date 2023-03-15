@@ -1,0 +1,22 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TP1-2050-equipe17:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/TP1_2050_equipe17_jar</output-path>
+    <root id="archive" name="TP1-2050-equipe17.jar">
+      <element id="module-output" name="TP1-2050-equipe17" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/gson-2.10.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/json-20220924.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/json-lib-2.4-jdk15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/json-simple-1.1.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/commons-io-2.11.0 2/commons-io-2.11.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/commons-io-2.11.0 2/commons-io-2.11.0-tests.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/commons-io-2.11.0 2/commons-io-2.11.0-javadoc.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/commons-io-2.11.0 2/commons-io-2.11.0-sources.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/commons-io-2.11.0 2/commons-io-2.11.0-test-sources.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/commons-lang3-3.12.0/commons-lang3-3.12.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/commons-lang3-3.12.0/commons-lang3-3.12.0-tests.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/commons-lang3-3.12.0/commons-lang3-3.12.0-javadoc.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/commons-lang3-3.12.0/commons-lang3-3.12.0-sources.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/commons-lang3-3.12.0/commons-lang3-3.12.0-test-sources.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
