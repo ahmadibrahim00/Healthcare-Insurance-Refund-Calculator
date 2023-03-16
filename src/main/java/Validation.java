@@ -87,11 +87,10 @@ public class Validation {
             setValide(reclamationClient.get("dossier") != null && reclamationClient.get("mois") != null
                     && reclamationClient.get("reclamations") != null && reclamationClient.size() == 3);
         } catch (NullPointerException e) {
-            setMessageErreur("Le fichier d'entrée n'a pas toutes les clés nécessaires.");
             setValide(false);
         }
         if (!valide)
-            setMessageErreur("Le fichier d'entrée n'a pas toutes les clés nécessaires ou a des entrées superflues.");
+            setMessageErreur("Le fichier d'entrée a une ou plusieurs entrées superflues.");
     }
     /**
      * Cette methode permet de valider le type de contrat du client.
@@ -114,7 +113,8 @@ public class Validation {
         if (valide){
             matriculeDossier = String.valueOf(reclamationClient.get("dossier"));
             if(matriculeDossier.length() != 7) {
-                setMessageErreur("La matricule du dossier n'a pas la bonne longueur.");
+                setMessageErreur("La matricule du dossier n'a pas la bonne longueur. Elle doit être de 7 caractères, " +
+                        "commençant par une lettre de contrat valide suivi de 6 chiffres");
                 setValide(false);
             }
         }
@@ -164,8 +164,10 @@ public class Validation {
             } catch (NumberFormatException | IndexOutOfBoundsException e) {
                 setValide(false);
             }
-            if (!valide || Long.parseLong(mois.substring(0, 4)) < 0 || Long.parseLong(mois.substring(0, 4)) < 1900)
+            if (!valide || Long.parseLong(mois.substring(0, 4)) < 0 || Long.parseLong(mois.substring(0, 4)) < 1900) {
                 setMessageErreur("L'année de la clé \"mois\" doit contenir 4 chiffre et être supérieur à 1900.");
+                setValide(false);
+            }
         }
     }
 
@@ -193,7 +195,7 @@ public class Validation {
         if (valide) {
             reclamations = (JSONArray) reclamationClient.get("reclamations");
             if (reclamations.isEmpty()) {
-                setMessageErreur("L'Array \"reclamations\" est vide.");
+                setMessageErreur("L'array \"reclamations\" est vide.");
                 setValide(false);
             }
         }
@@ -214,9 +216,10 @@ public class Validation {
                 setValide(objet.get("soin") != null && objet.get("date") != null && objet.get("montant") != null
                         && objet.size() == 3);
                 position++;
+                if(!valide)
+                    setMessageErreur("La réclamation " + position + " contient des champs invalides.");
             }
-        }if(!valide)
-            setMessageErreur("L'array \"réclamations\" contient des champs invalides.");
+        }
     }
 
     /**
@@ -225,7 +228,7 @@ public class Validation {
      * @param reclamations l'array contenant les réclamations du client.
      */
 
-    private void estDateInvalide(JSONArray reclamations){
+    private void estReclamationInvalide(JSONArray reclamations){
         if (!valide) {
             for (Object o : reclamations) {
                 JSONObject objet = (JSONObject) o;
@@ -256,6 +259,10 @@ public class Validation {
         }
         return tabVal;
     }
+
+    /**
+     * Cette méthode permet de valider la longueur des dates des réclamations.
+     */
     private void verifieLongueurDate() {
         int position = 0;
         while (valide && position < obtenirValeur("mois").length) {
@@ -263,7 +270,7 @@ public class Validation {
             position++;
         }
         if (!valide) {
-            setMessageErreur("La longueur de la date dans la réclamation " + position + "est invalide.");
+            setMessageErreur("La longueur de la date dans la réclamation " + position + " est invalide.");
             setValide(false);
         }
     }
@@ -296,7 +303,8 @@ public class Validation {
                         && obtenirValeur("date")[position].charAt(7) == '-');
                 position++;
                 if(!valide)
-                    setMessageErreur("Le format de la date de la réclamation " + position + "n'est pas valide.");
+                    setMessageErreur("Le format de la date de la réclamation " + position + " n'est pas valide." +
+                            "(0000-00-00)");
             }
         }
     }
@@ -307,12 +315,14 @@ public class Validation {
      */
     private void validerTypeJours() {
         if(valide) {
+            int position = 0;
             try {
-                for (int i = 0; i < obtenirValeur("soin").length; i++) {
-                    Long.parseLong(obtenirValeur("date")[i].substring(8));
+                while (position < obtenirValeur("soin").length) {
+                    Long.parseLong(obtenirValeur("date")[position].substring(8));
+                    position++;
                 }
             } catch (NumberFormatException e2) {
-                setMessageErreur("Le jour d'une des réclamations n'est pas un nombre.");
+                setMessageErreur("Le jour de la réclamation " + ++position + " n'est pas un nombre.");
                 setValide(false);
             }
         }
@@ -385,7 +395,7 @@ public class Validation {
                     numSoin[i] = Long.parseLong(obtenirValeur("soin")[i]);
                 }
             } catch (NumberFormatException e2) {
-                setMessageErreur("Un des entrées des champs soin n'est pas un nombre.");
+                setMessageErreur("Au moins une réclamation contient un numéro de soin contenant des lettres/symboles.");
                 setValide(false);
             }
         }
@@ -397,13 +407,15 @@ public class Validation {
      */
     private void estNumeroSoinValide() {
         if (valide && verifierTypeDesSoins() != null) {
+            int position = 0;
             for (long i : verifierTypeDesSoins()) {
                 if (!(i >= 300 && i <= 400) && i != 100 && i != 150 && i != 175 && i != 200 && i != 500 && i != 600
                         && i != 700) {
                     setValide(false);
-                    setMessageErreur("Le numero de soin entré dans la réclamation " + (i + 1)
-                            + " numéros de soin invalides.");
+                    setMessageErreur("Le numéro de soin entré dans la réclamation " + ++position +
+                            " est un numéro de soin invalides.");
                 }
+                position++;
             }
         }
     }
@@ -417,8 +429,8 @@ public class Validation {
         int position = 0;
         while(valide && position < montant.length) {
             if (!montant[position].endsWith("$")) {
-                setMessageErreur("Le montant entré dans la réclamation " + (position + 1)
-                        + " ne se termine pas par un \"$\".");
+                setMessageErreur("Le montant entré dans la réclamation " + ++position +
+                        " ne se termine pas par un \"$\".");
                 setValide(false);
             }
             position++;
@@ -428,7 +440,7 @@ public class Validation {
     /**
      * Cette methode permet de retirer les signes de dollar des valeurs des cles "montant", de verifier que les
      * valeurs ne sont pas negatives et de retourner les valeurs modifiees dans un tableau de type String.
-     * @return un tableau de type String contenanat les valeurs des cles montant modifiees.
+     * @return un tableau de type String contenant les valeurs des cles montant modifiees.
      */
     private String [] formaterMontant() {
         String[] montant = new String[0];
@@ -437,7 +449,7 @@ public class Validation {
             for (int i = 0; i < montant.length; i++) {
                 montant[i] = montant[i].substring(0, montant[i].lastIndexOf("$"));
                 if(montant[i].charAt(0) == '-' ) {
-                    setMessageErreur("Le montant entré dans la réclamation " + (i + 1) +" est négatif.");
+                    setMessageErreur("Le montant entré dans la réclamation " + ++i +" est négatif.");
                     setValide(false);
                 }
             }
@@ -455,7 +467,7 @@ public class Validation {
                 try {
                     Float.parseFloat(formaterMontant()[position]);
                 } catch (NumberFormatException e) {
-                    setMessageErreur("Le montant entré de la réclamation " + (position + 1) + " n'est pas un montant valide.");
+                    setMessageErreur("Le montant entré de la réclamation " + ++position + " n'est pas un nombre.");
                     setValide(false);
                 }
                 position++;
@@ -474,10 +486,9 @@ public class Validation {
                     setValide(montant[i].contains(".") && montant[i].charAt(montant[i].indexOf('.') + 3) == '$');
                 } catch(IndexOutOfBoundsException e) {
                     setValide(false);
+                    setMessageErreur("Le montant de la réclamation " + ++i + " n'a pas 2 chiffres après la virgule.");
                 }
             }
-            if (!valide)
-                setMessageErreur("Un des montants entrés n'a pas deux chiffres après la virgule");
         }
     }
 
@@ -519,7 +530,7 @@ public class Validation {
         if (valide) {
             validerLaPresenceDesClesReclamations(obtenirReclamations());
                 if(!valide) {
-                    estDateInvalide(obtenirReclamations());
+                    estReclamationInvalide(obtenirReclamations());
                 } else {
                 verifierTypeDesSoins();
                     if (valide)
