@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 public class JSONHashTest
 {
-    JSONHash a = new JSONHash("Remboursement.json", "resultat.json");
+    JSONHash a = new JSONHash("Assurance.json", "Test.json");
     /**
      * Méthode de test Junit qui valide le numéro de dossier
      */
