@@ -7,14 +7,14 @@ import static org.junit.Assert.assertEquals;
 
 public class JSONHashTest
 {
-    JSONHash a = new JSONHash("Remboursement.json", "resultat.json");
+    JSONHash a = new JSONHash("Assurance.json", "Test.json");
     /**
      * Méthode de test Junit qui valide le numéro de dossier
      */
     @Test
     public void testgetnumDossier() throws IOException, ParseException {
         a.load();
-        assertEquals(100323l, a.getNumDossier());
+        assertEquals(100323, a.getNumDossier());
     }
     /**
      * Méthode de test Junit qui valide la lettre du contrat
@@ -41,7 +41,7 @@ public class JSONHashTest
     {
         a.load();
         long soin0 = a.getSoin(0);
-        assertEquals(100l, soin0);
+        assertEquals(100, soin0);
     }
     /**
      * Méthode de test Junit qui valide le nombre de soins
