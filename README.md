@@ -22,8 +22,8 @@ avec maven 3.8.1 et les versions plus récentes. Donc, nous encourageons d'utili
 Le fichier d'entrée, contenant les informations du client et des réclamations doivent respecter la structure du fichier 
 "Assurance.json" dans la racine du projet. S'il y a des champs manquants, que les données ne respectent pas les formats, qu'il
 y a des données erronées ou que le fichier n'a pas l'extension ".json", le fichier de sortie contiendra un message d'erreur
-significatif.
-
+significatif. De plus, il est important d'avoir le fichier "Assurance.json" dans le root repository du projet, et de ne
+pas toucher à son nom ou à son contenu, ce qui empêcherait de tester le programme avant de l'exécuter.
 
 ### Executer le projet avec la ligne de commande
 
@@ -39,4 +39,6 @@ le projet doit être exécuté avec la ligne de commande.
 - Pour build le projet, donc compiler les fichiers .java, exécuter les tests, créer Remboursement.jar, etc. 
 - `java -jar "target\Remboursement.jar" "Reclamation.json" "Remboursement.json"`
 - Puis finalement on exécute le programme et un fichier "Remboursement.json" est créé et placé dans le root directory du projet, 
-contenant soit un fichier contenant les montant à rembourser ou un message d'erreur.
+contenant soit un fichier contenant les montant à rembourser ou un message d'erreur. Il y aura aussi un fichier nommé
+"Test.json" de créé lors de l'exécution des tests. Ce fichier peut être effacé, au besoin, toutefois, il sera créé après
+chaque commande d'exécution desa tests.
