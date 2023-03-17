@@ -13,18 +13,25 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class ValidationTest {
-    JSONObject assurance = new JSONObject();
-    Validation valide = new Validation();
-    JSONArray reclamation;
-    String messageErreur;
+    private final String MSG_ERR_FILE_NOT_FOUND = "******Le fichier \"Assurance.json\" n'est pas dans le root " +
+            "directory ou son nom a ete modifie******";
+    private final String MSG_ERR_FILE_VIDE = "******Le fichier \"Assurance.json\" est vide.******";
+    private final String MSG_ERR_FILE_INVALIDE = "******Le contenu du fichier \"Assurance.json\" a ete modifie, les " +
+            "tests ne peuvent pas etre compiles******";
+    private static JSONObject assurance = new JSONObject();
+    private Validation valide = new Validation();
+    private static JSONObject compare = new JSONObject();
+    private static JSONObject temp1 = new JSONObject();
+    private static JSONObject temp2 = new JSONObject();
+    private static JSONObject temp3 = new JSONObject();
+    private static JSONArray temp4 = new JSONArray();
+    private JSONArray reclamation;
+    private String messageErreur;
 
-    @BeforeEach
-    public void creerNouvelleInstance() throws IOException, ParseException {
-        new JSONHash("Assurance.json", "Test.json");
-        assurance = (JSONObject) new JSONParser().parse(new FileReader("Assurance.json"));
-        reclamation = (JSONArray) assurance.get("reclamations");
-    }
 
+    /**
+     * Cette méthode permet d'aller chercher le message d'erreur qui est associé au fichier "Test.json".
+     */
     public void obtenirMessageDErreur() {
         Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
         String output = gson.toJson(assurance);
@@ -37,12 +44,86 @@ public class ValidationTest {
         messageErreur = valide.getMessageErreur();
     }
 
+    /**
+     * Cree une copie de chacune des reclamations du fichier Assurance.json
+     */
+    public static void clonerReclamationsFichierAssuranceJson(){
+        temp1.put("soin", 100);
+        temp1.put("date", "2022-01-11");
+        temp1.put("montant", "234.00$");
+        temp2.put("soin", 200);
+        temp2.put("date", "2022-01-13");
+        temp2.put("montant", "90.00$");
+        temp3.put("soin", 334);
+        temp3.put("date", "2022-01-31");
+        temp3.put("montant", "125.00$");
+    }
+
+    /**
+     * Cree un JSONObject contenant les memes valeurs que le fichier Assurance.json
+     */
+    public static void creerFichierEquivalentAAssuranceJson() {
+        compare.put("dossier", "A100323");
+        compare.put("mois", "2022-01");
+        temp4.add(temp1);
+        temp4.add(temp2);
+        temp4.add(temp3);
+        compare.put("reclamations", temp4);
+    }
+
+    /**
+     * Cree une instance de JSONObject contenu dans le fichier Assurance.json avant chaque test.
+     */
+    @BeforeEach
+    public void creerNouvelleInstance() {
+        new JSONHash("Assurance.json", "Test.json");
+        try {
+            assurance = (JSONObject) new JSONParser().parse(new FileReader("Assurance.json"));
+        } catch (IOException e1) {
+            System.err.println(MSG_ERR_FILE_NOT_FOUND);
+            System.exit(-1);
+        } catch (ParseException e2) {
+            System.err.println(MSG_ERR_FILE_VIDE);
+            System.exit(-2);
+        }
+        reclamation = (JSONArray) assurance.get("reclamations");
+    }
+
+    //////////////////////////////////////////////////
+    /// Test la validité du fichier Assurance.json ///
+    //////////////////////////////////////////////////
+    /**
+     * Compare ce que le fichier Assurance.json devrait contenir a ce qu'il contient reellement. S'il n'est pas egal,
+     * les autres tests ne peuvent pas compiler.
+     */
+    @Test
+    public void comparerAssuranceJsonACopieDuFichier() {
+        clonerReclamationsFichierAssuranceJson();
+        creerFichierEquivalentAAssuranceJson();
+        Gson compareEnGson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
+        String formatVoulu = compareEnGson.toJson(compare);
+        Gson assuranceEnGson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
+        String assuranceString = assuranceEnGson.toJson(assurance);
+        if (!formatVoulu.equals(assuranceString)) {
+            System.err.println(MSG_ERR_FILE_INVALIDE);
+            System.exit(-3);
+        }
+    }
+
+    /////////////////////////////
+    /// Cas de fichier valide ///
+    /////////////////////////////
+    /**
+     * Cette méthode permet de valider un fichier qui est conforme aux exigences et qui respecte le format voulu.
+     */
     @Test
     public void verifierFichierValide() {
         obtenirMessageDErreur();
         Assertions.assertEquals("", messageErreur);
     }
-
+    /////////////////////////////
+    // Cas de fichier invalide //
+    /////////////////////////////
     @Test
     public void verifierLaPresenceDesCles() {
         assurance.put("mois", null);
