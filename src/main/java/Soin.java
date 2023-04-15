@@ -33,11 +33,16 @@ public class Soin {
      * @return le montant a rembourser
      */
     public Monnaie calculerRemboursement(){
-        Monnaie montantRembourse = new Monnaie(0);
-       if (maxExiste() && dejaRembourse.getCompteur(numeroSoin).plusGrandOuEgal(trouverMax())){
+        Monnaie montantRembourse;
+       if (maxMensuelExiste() && dejaRembourse.getCompteur(numeroSoin).plusGrandOuEgal(trouverMaxMensuel())
+               || maxExiste() && dejaRembourse.getCompteur(numeroSoin).plusGrandOuEgal(trouverMax())){
            montantRembourse = new Monnaie(0);
-       } else if (maxExiste() && dejaRembourse.getCompteur(numeroSoin).ajouter(calculerMontantAvantMax()).plusGrandOuEgal(trouverMax())){
+       } else if (maxExiste() && dejaRembourse.getCompteur(numeroSoin).ajouter(calculerMontantAvantMax())
+               .plusGrandOuEgal(trouverMax())){
            montantRembourse = trouverMax().soustraire(dejaRembourse.getCompteur(numeroSoin));
+       } else if (maxMensuelExiste() && dejaRembourse.getCompteur(numeroSoin).ajouter(calculerMontantAvantMax())
+               .plusGrandOuEgal(trouverMaxMensuel())) {
+           montantRembourse = trouverMaxMensuel().soustraire(dejaRembourse.getCompteur(numeroSoin));
        } else {
            montantRembourse = calculerMontantAvantMax();
        }
@@ -45,7 +50,6 @@ public class Soin {
         dejaRembourse.accumuler(numeroSoin, montantRembourse);
         return montantRembourse;
     }
-
     /**
      * Permet d'obtenir le maximum selon le type de contrat associe a la reclamation.
      * @return le maximum remboursable.
@@ -61,13 +65,33 @@ public class Soin {
             default -> new Monnaie(-1);
         };
     }
+    //TODO
+    private Monnaie trouverMaxMensuel(){
+        Monnaie maxMensuel;
+        if (numeroSoin == 100 || numeroSoin == 200){
+            maxMensuel = new Monnaie(250);
+        } else if (numeroSoin == 175) {
+            maxMensuel = new Monnaie(200);
+        } else if (numeroSoin == 500) {
+            maxMensuel = new Monnaie(150);
+        } else if (numeroSoin == 600) {
+            maxMensuel = new Monnaie(300);
+        } else {
+            maxMensuel = new Monnaie(-1);
+        }
+        return maxMensuel;
+    }
     /**
      * Determine si un maximum est associe a ce soin de la reclamation.
      * @return Vrai si le contrat admet un maximum, faux sinon.
      */
     private boolean maxExiste() {
         return !(trouverMax().egal(new Monnaie(-1)));
-    } //TODO
+    }
+    //TODO
+    private boolean maxMensuelExiste() {
+        return !(trouverMaxMensuel().egal(new Monnaie(-1)));
+    }
     /**
      * Permet d'obtenir le maximum parmi les maximums
      * correspondant au contrat A en fonction du type de soin.
