@@ -136,9 +136,11 @@ public class Statistique {
             additionnerSoinsParType2(soin);
         }
     }
-    public void afficherStatistiques(String option) {
+    public void afficherStatistiques(String statistiques, String option) {
         if (option.equals("-S")) {
-            
+            System.out.println(statistiques);
+        } else if (option.equals("-SR")) {
+
         }
     }
 
