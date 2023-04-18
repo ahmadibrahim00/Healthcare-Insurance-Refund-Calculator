@@ -13,6 +13,8 @@ import org.json.simple.parser.ParseException;
 import java.io.IOException;
 
 public class Validation {
+    private final String MSG_ERR_NBR_JOURS_MOIS1 = "Le nombre de jour entré dans la réclamation ";
+    private final String MSG_ERR_NBR_JOURS_MOIS2 = " est inférieur ou supérieur au nombre maximal de jour du mois.";
     private boolean valide;
     private JSONObject reclamationClient;
     private String messageErreur = "";
@@ -141,9 +143,8 @@ public class Validation {
         if (valide) {
             String mois = String.valueOf(reclamationClient.get("mois"));
             try {
-                if (mois.charAt(4) != '-' || mois.length() != 7) {
+                if (mois.charAt(4) != '-' || mois.length() != 7)
                     setValide(false);
-                }
             } catch (IndexOutOfBoundsException e) {
                 setValide(false);
             }
@@ -232,12 +233,13 @@ public class Validation {
         if (!valide) {
             for (Object o : reclamations) {
                 JSONObject objet = (JSONObject) o;
+                int index = reclamations.indexOf(o);
                 if (objet.get("soin") == null)
-                    setMessageErreur("Dans la réclamation " + reclamations.indexOf(o) + ", le champs soin est invalide.");
+                    setMessageErreur("Dans la réclamation " + index + ", le champs soin est invalide.");
                 else if (objet.get("date") == null)
-                    setMessageErreur("Dans la réclamation " + reclamations.indexOf(o) + ", le champs date est invalide.");
+                    setMessageErreur("Dans la réclamation " + index + ", le champs date est invalide.");
                 else if(objet.get("montant") == null)
-                    setMessageErreur("Dans la réclamation " + reclamations.indexOf(o) + ", le champs montant est invalide.");
+                    setMessageErreur("Dans la réclamation " + index + ", le champs montant est invalide.");
             }
         }
     }
@@ -345,8 +347,7 @@ public class Validation {
                         Long.parseLong(obtenirValeur("date")[position].substring(8)) > 0);
                 position++;
                 if (!valide)
-                    setMessageErreur("Le nombre de jour entré dans la réclamation " + position
-                            + " est inférieur ou supérieur au nombre maximal de jour du mois.");
+                    setMessageErreur(MSG_ERR_NBR_JOURS_MOIS1 + position + MSG_ERR_NBR_JOURS_MOIS2);
             }
         }
     }

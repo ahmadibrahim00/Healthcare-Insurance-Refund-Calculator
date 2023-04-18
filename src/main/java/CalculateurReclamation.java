@@ -88,4 +88,23 @@ public class CalculateurReclamation {
     public static void setFichierSortie(String fichierSortie) {
         CalculateurReclamation.fichierSortie = fichierSortie;
     }
+
+    /**
+     * Cette methode permet creer le fichier de sortie.
+     * @param JSON pour aller chercher les noms de fichier.
+     * @throws IOException a cause du JSONHash.
+     * @throws ParseException a cause du JSONHash.
+     */
+    public static void creerFichierSortie(JSONHash JSON) throws IOException, ParseException {
+        Validation validation = new Validation();
+        if (validation.estFichierValide(JSON.getFilename(), JSON.getResultat())) {
+            CalculateurReclamation.setFichierEntree(JSON.getFilename());
+            CalculateurReclamation.setFichierSortie(JSON.getResultat());
+            new CalculateurReclamation();
+            Remboursement.outputJSON();
+        } else {
+            Remboursement.outputJSONErreur(validation.getMessageErreur());
+        }
+        Remboursement.formatJSON();
+    }
 }

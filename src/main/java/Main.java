@@ -7,19 +7,9 @@ import java.io.IOException;
  * survenu.
  */
 public class Main {
-
     public static void main(String[] args) throws IOException, ParseException {
-        Validation validation = new Validation();
         JSONHash JSON = new JSONHash(args[0], args[1]);
         JSON.load();
-        if (validation.estFichierValide(JSON.getFilename(), JSON.getResultat())) {
-            CalculateurReclamation.setFichierEntree(args[0]);
-            CalculateurReclamation.setFichierSortie(args[1]);
-            new CalculateurReclamation();
-            Remboursement.outputJSON();
-        } else {
-            Remboursement.outputJSONErreur(validation.getMessageErreur());
-        }
-        Remboursement.formatJSON();
+        CalculateurReclamation.creerFichierSortie(JSON);
     }
 }
