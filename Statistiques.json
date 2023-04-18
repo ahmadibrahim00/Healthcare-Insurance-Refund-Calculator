@@ -1,0 +1,18 @@
+{
+  "reclamations invalides": 0,
+  "reclamations valides": 0,
+  "nombre de soins par type": [
+    {
+      "soin 400": 0,
+      "soin 600": 0,
+      "soin 500": 0,
+      "soin 175": 0,
+      "soin 200": 0,
+      "soin 100": 0,
+      "soin 150": 0,
+      "soin 300-399": 0,
+      "soin 0": 0,
+      "soin 700": 0
+    }
+  ]
+}
