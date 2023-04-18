@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 
 public class Statistique {
     JSONObject fichier = new JSONObject();
+
     int reclamationsValides;
     int reclamationsInvalides;
     int soin0;
