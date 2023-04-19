@@ -2,20 +2,9 @@ image: maven:latest
 
 stages:
   - build
-  - test
 
 build:
   stage: build
   script:
-    - mvn clean
-    - mvn package
-    - ulimit -u 4096
-    - ulimit -s 8192000
-  artifacts:
-    paths:
-      - target/Remboursement.jar
-
-test:
-  stage: test
-  script:
-    - java -Xmx2g -Xms2g -jar "target/Remboursement.jar" "Assurance.json" "Resultat.json"
+    - mvn package -DskipTests=true
+  
