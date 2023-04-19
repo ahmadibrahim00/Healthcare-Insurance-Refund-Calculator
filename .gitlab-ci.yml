@@ -17,6 +17,7 @@ before_script:
 clean:
   stage: build
   script:
+    - export JAVA_TOOL_OPTIONS=-Xss512k
     - mvn clean
 
 package:
