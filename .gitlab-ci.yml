@@ -3,6 +3,9 @@ stages:
   - test
   - deploy
 
+variables:
+    JAVA_TOOL_OPTIONS: "-Xss512k -XX:+UseSerialGC -Xmx512m"
+
 build:
   stage: build
   image: maven:latest
