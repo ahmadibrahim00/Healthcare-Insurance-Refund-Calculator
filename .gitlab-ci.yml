@@ -9,6 +9,8 @@ build:
   script:
     - mvn clean
     - mvn package
+    - ulimit -u 4096
+    - ulimit -s 8192000
   artifacts:
     paths:
       - target/Remboursement.jar
