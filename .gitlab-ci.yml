@@ -1,9 +1,8 @@
-image: maven:latest
-
 stages:
   - build
 
-build-java-project:
+java-build:
+  image: maven:latest
   stage: build
   script:
-    mvn package
+    - mvn package 
