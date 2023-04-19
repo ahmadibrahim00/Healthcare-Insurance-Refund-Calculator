@@ -6,6 +6,7 @@ build-job:
     - echo "Hello, $GITLAB_USER_LOGIN!"
 
 stages:
+  - build
   - clean
   - package
   - test1
@@ -18,7 +19,7 @@ clean:
   script:
     - mvn clean
 
-paclage:
+package:
   stage: build
   script:
     - mvn package
