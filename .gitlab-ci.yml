@@ -7,22 +7,16 @@ build-job:
 
 stages:
   - build
-  - clean
-  - package
   - test1
 
 before_script:
   - export JAVA_TOOL_OPTIONS="-XX:+UseSerialGC -Xmx512m"
   - apt-get update && apt-get install -y git
 
-clean:
+build:
   stage: build
   script:
     - mvn clean
-
-package:
-  stage: build
-  script:
     - mvn package
 
 test1:
