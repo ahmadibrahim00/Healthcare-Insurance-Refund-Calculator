@@ -2,17 +2,8 @@ image: maven:latest
 
 stages:
   - build
-  - deploy
 
-package_job:
+build-java-project:
   stage: build
   script:
-    - echo "Maven packaging started"
-    - mvn package
-
-deploy_job:
-  stage: build
-  script: 
-    - echo "Maven deploy started"
-    - java -jar "target\Remboursement.jar" "Reclamation.json" "Remboursement.json"
-  
+    mvn package
