@@ -16,4 +16,4 @@ build:
 test:
   stage: test
   script:
-    - java -jar "target/Remboursement.jar" "Reclamation.json" "Remboursement.json"
+    - java -jar "target/Remboursement.jar" "Assurance.json" "Resultat.json"
