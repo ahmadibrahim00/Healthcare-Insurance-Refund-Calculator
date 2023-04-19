@@ -7,19 +7,19 @@ build-job:
 
 stages:
   - build
-  - test1
+  - test
 
 before_script:
   - export JAVA_TOOL_OPTIONS="-XX:+UseSerialGC -Xmx512m"
   - apt-get update && apt-get install -y git
+  - mvn clean
 
 build:
   stage: build
   script:
-    - mvn clean
     - mvn package
 
 test1:
-  stage: test1
+  stage: test
   script:
    java -jar "target\Remboursement.jar" "Reclamation.json" "Remboursement.json"
