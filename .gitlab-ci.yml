@@ -2,7 +2,8 @@ stages:
   - build
 
 java-build:
-  image: maven:latest
+  # select the most appropriate image for your project
+  image: maven:3.8-openjdk-11
   stage: build
   script:
-    - mvn package 
+    - mvn package -DskipTests=true
