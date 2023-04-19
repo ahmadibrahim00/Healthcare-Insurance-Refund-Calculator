@@ -4,7 +4,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -29,7 +28,7 @@ public class Statistique {
      * Cette methode permet d'aller chercher les statistiques existantes dans le cas ou ce n'est pas la premiere fois
      * que le prograamme est execute.
      * @throws IOException dans le cas ou le fichier n'existe pas.
-     * @throws ParseException
+     * @throws ParseException par defaut.
      */
     public void getStatistiques() throws IOException, ParseException {
         JSONObject obj = (JSONObject) new JSONParser().parse(new FileReader("Statistiques.json"));
@@ -41,10 +40,11 @@ public class Statistique {
     }
 
     /**
-     *
-     * @param obj
+     * Cette methode permet d'aller cherhcer les statistiques par rapports aux soins dans le cas ou ce n'est pas la
+     * premiere fois que le prograamme est execute.
+     * @param obj JSONObjet contenant les soins déclarés par type.
      */
-    public void getNombreParTypeSoins(JSONObject obj){
+    public void getNombreParTypeSoins(JSONObject obj) {
         soin0   = (long) obj.get("soin 0");
         soin100 = (long) obj.get("soin 100");
         soin150 = (long) obj.get("soin 150");
@@ -58,11 +58,11 @@ public class Statistique {
     }
 
     /**
-     *
-     * @param obj
-     * @return
+     * Cette methode permet de recuperer le nombre de reclamations contenu dans le fichier d'entree.
+     * @param obj JSONArray contenant les reclamations du fichier d'entrée.
+     * @return le nombre de reclamation du fichier d'entrée.
      */
-    public long getStatistiquesExistantes(JSONArray obj) throws IOException, ParseException {
+    public long getNombreReclamationsCourantes(JSONArray obj) {
         long nombresReclamationsInvalides = 0;
         if(obj != null)
         {
@@ -74,7 +74,7 @@ public class Statistique {
     /**
      * Cette methode permet de creer un JSONObject contenant toutes les statistiques demandees.
      */
-    public void formatterJsonStatistiques() {
+    public void creerJsonObjectStatistiques() {
         JSONObject soins = new JSONObject();
         JSONArray soinsParType = new JSONArray();
         fichier.put("reclamations valides", reclamationsValides);
@@ -100,6 +100,11 @@ public class Statistique {
         soins.put("soin 600", soin600);
         soins.put("soin 700", soin700);
     }
+
+    /**
+     * Cette methode permet d'incrementer un type de soin.
+     * @param soin long representant le numero de soin courant
+     */
     public void additionnerSoinsParType1(long soin) {
         if (soin == 0)
             soin0++;
@@ -112,6 +117,11 @@ public class Statistique {
         if (soin == 200)
             soin200++;
     }
+
+    /**
+     * Cette methode permet d'incrementer un type de soin.
+     * @param soin long representant le numero de soin courant
+     */
     public void additionnerSoinsParType2(long soin) {
         if (soin >= 300 && soin <= 399)
             soin300++;
@@ -126,8 +136,8 @@ public class Statistique {
     }
 
     /**
-     *
-     * @param reclamations
+     * Cette methode permet de d'augmenter les compteurs des soins par type de soin.
+     * @param reclamations JSONArray contenant les reclamations du fichier d'entree courant.
      */
     public void cumulerSoinsParType(JSONArray reclamations) {
         for(int i = 0 ; i < reclamations.size() ; i++) {
@@ -136,11 +146,44 @@ public class Statistique {
             additionnerSoinsParType2(soin);
         }
     }
-    public void afficherStatistiques(String statistiques, String option) {
+
+    /**
+     * Cette methode peremt de reinitialiser les comnpteurs du fichier "Statisques.json".
+     */
+    public void reinitialiseStatistiques() {
+        reclamationsValides = 0;
+        reclamationsInvalides = 0;
+        reinitialiserSoins();
+    }
+
+    /**
+     * Cette methode peremt de reinitialiser les comnpteurs des soins
+     */
+    public void reinitialiserSoins() {
+        soin0   = 0;
+        soin100 = 0;
+        soin150 = 0;
+        soin175 = 0;
+        soin200 = 0;
+        soin300 = 0;
+        soin400 = 0;
+        soin500 = 0;
+        soin600 = 0;
+        soin700 = 0;
+    }
+    /**
+     * Cette methode permet d'executer les options entrees en ligne de commande(-S et -SR).
+     * @param statistiques String contenant toutes les statistiques globales.
+     * @param option l'option entree dans la ligne de commande.
+     * @throws FileNotFoundException a cause du PrintWriter de la methode modifierFichierStatistique.
+     */
+    public void executerOptionsStatistique(String statistiques, String option) throws FileNotFoundException {
         if (option.equals("-S")) {
             System.out.println(statistiques);
         } else if (option.equals("-SR")) {
-
+            reinitialiseStatistiques();
+            formaterFichierStatistiques();
+            System.out.println("Les statistiques ont été réinitialisées.");
         }
     }
 
@@ -148,8 +191,8 @@ public class Statistique {
      * Cette methode permet de formatter le fichier de statistiques.
      * @throws FileNotFoundException a cause du PrintWriter.
      */
-    public String modifierFichierStatistiques() throws FileNotFoundException {
-        formatterJsonStatistiques();
+    public String formaterFichierStatistiques() throws FileNotFoundException {
+        creerJsonObjectStatistiques();
         Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
         String output = gson.toJson(fichier);
         PrintWriter pw = new PrintWriter("Statistiques.json");
@@ -160,23 +203,22 @@ public class Statistique {
     }
 
     /**
-     * Cette methode permet de creer/modifier le fichier "Statistiques.json".
-     *
+     * Cette methode permet de calculer les statistiques et de creer/modifier le fichier "Statistiques.json".
      * @param json pour acceder aux reclamations du fichier d'entrée courant.
-     * @throws FileNotFoundException a cause du PrintWriter.
-     * @@param option
+     * @return un String contenant les statistiques demandees.
+     * @throws IOException a cause du PrintWriter de la methode modifierFichierStatistique.
+     * @throws ParseException par defaut.
      */
-    public String creerFichierSortieStatistiques(JSONHash json)
-            throws IOException, ParseException {
+    public String calculerStatistiques(JSONHash json) throws IOException, ParseException {
         JSONArray reclamations = (JSONArray) json.getJsonobj().get("reclamations");
         Validation validation = new Validation();
         getStatistiques();
         if (!validation.estFichierValide(json.getFilename(), json.getResultat())) {
-            reclamationsInvalides = reclamationsInvalides + getStatistiquesExistantes(reclamations);
+            reclamationsInvalides = reclamationsInvalides + getNombreReclamationsCourantes(reclamations);
         } else {
-            reclamationsValides = reclamationsValides + getStatistiquesExistantes(reclamations);
+            reclamationsValides = reclamationsValides + getNombreReclamationsCourantes(reclamations);
             cumulerSoinsParType((JSONArray) json.getJsonobj().get("reclamations"));
         }
-        return modifierFichierStatistiques();
+        return formaterFichierStatistiques();
     }
 }

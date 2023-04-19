@@ -7,14 +7,13 @@ import java.io.IOException;
  * survenu.
  */
 public class Main {
-    public static void main(String[] args) throws IOException, ParseException {
+    public static void main(String [] args) throws IOException, ParseException {
         JSONHash JSON = new JSONHash(args[0], args[1]);
         Statistique statistique = new Statistique();
         JSON.load();
         CalculateurReclamation.creerFichierSortie(JSON);
-        String fichierStatisque = statistique.creerFichierSortieStatistiques(JSON);
+        String fichierStatisque = statistique.calculerStatistiques(JSON);
         if (args.length > 2)
-            statistique.afficherStatistiques(fichierStatisque, args[2]);
-
+            statistique.executerOptionsStatistique(fichierStatisque, args[2]);
     }
 }
