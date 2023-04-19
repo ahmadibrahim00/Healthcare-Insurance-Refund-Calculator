@@ -23,6 +23,7 @@ clean:
 package:
   stage: build
   script:
+    - export JAVA_TOOL_OPTIONS=-Xss512k
     - mvn package
 
 test1:
