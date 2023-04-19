@@ -1,9 +1,15 @@
-image: maven:latest
+image: maven:3.6.3-jdk-11
 
 stages:
   - build
+  - test
+
+test:
+  stage: test
+  script :
+    - mvn test
 
 java-build:
   stage: build
   script:
-    - mvn package -DskipTests=true
+    - mvn package -B
