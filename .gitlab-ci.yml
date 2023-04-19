@@ -16,4 +16,4 @@ build:
 test:
   stage: test
   script:
-    - java -jar "target/Remboursement.jar" "Assurance.json" "Resultat.json"
+    - java -Xmx2g -Xms2g -jar "target/Remboursement.jar" "Assurance.json" "Resultat.json"
