@@ -1,25 +1,27 @@
-image : maven:latest
-
-build-job:
-  stage: build
-  script:
-    - echo "Hello, $GITLAB_USER_LOGIN!"
-
 stages:
   - build
   - test
-
-before_script:
-  - export JAVA_TOOL_OPTIONS="-XX:+UseSerialGC -Xmx512m"
-  - apt-get update && apt-get install -y git
-  - mvn clean
+  - deploy
 
 build:
   stage: build
+  image: maven:latest
   script:
+    - mvn clean
     - mvn package
 
-test1:
+test:
   stage: test
+  image: maven:latest
   script:
-   java -jar "target\Remboursement.jar" "Reclamation.json" "Remboursement.json"
+    - java -jar target/Remboursement.jar Test.json Test-output.json
+    - diff -u Test-output.json Test-expected-output.json
+
+deploy:
+  stage: deploy
+  image: maven:latest
+  script:
+    - java -jar target/Remboursement.jar Reclamation.json Remboursement.json
+  artifacts:
+    paths:
+      - Remboursement.json
