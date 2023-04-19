@@ -6,16 +6,22 @@ build-job:
     - echo "Hello, $GITLAB_USER_LOGIN!"
 
 stages:
-  - build
+  - clean
+  - package
   - test1
 
 before_script:
   - apt-get update && apt-get install -y git
 
-build:
+clean:
   stage: build
   script:
-    - mvn clean  && mvn package
+    - mvn clean
+
+paclage:
+  stage: build
+  script:
+    - mvn package
 
 test1:
   stage: test1
