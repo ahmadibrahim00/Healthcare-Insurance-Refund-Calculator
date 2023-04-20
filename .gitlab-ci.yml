@@ -8,3 +8,8 @@ java-build:
   stage: build
   script:
     - mvn package -DskipTests=true
+
+java-run :
+  stage: build
+  script: 
+    java -jar "target\Remboursement.jar" "Reclamation.json" "Remboursement.json"
