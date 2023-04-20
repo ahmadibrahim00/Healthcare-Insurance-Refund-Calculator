@@ -13,4 +13,4 @@ java-build:
 java-run :
   stage: test
   script: 
-    java -jar "target\Remboursement-1.0-SNAPSHOT-shaded.jar" "Reclamation.json" "Remboursement.json"
+    java -jar "/builds/ibrahim.ahmad/inf2050-hiv2023-projet-equipe17/target/Remboursement-1.0-SNAPSHOT-shaded.jar" "Reclamation.json" "Remboursement.json"
