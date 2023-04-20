@@ -2,6 +2,7 @@ image: maven:latest
 
 stages:
   - build
+  - test
 
 java-build:
   # select the most appropriate image for your project
@@ -10,6 +11,6 @@ java-build:
     - mvn package -DskipTests=true
 
 java-run :
-  stage: build
+  stage: test
   script: 
     java -jar "target\Remboursement-1.0-SNAPSHOT-shaded.jar" "Reclamation.json" "Remboursement.json"
