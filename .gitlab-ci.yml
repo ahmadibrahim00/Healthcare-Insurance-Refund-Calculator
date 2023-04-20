@@ -12,4 +12,4 @@ java-build:
 java-run :
   stage: build
   script: 
-    java -jar "target\Remboursement.jar" "Reclamation.json" "Remboursement.json"
+    java -jar "target\Remboursement-1.0-SNAPSHOT-shaded.jar" "Reclamation.json" "Remboursement.json"
