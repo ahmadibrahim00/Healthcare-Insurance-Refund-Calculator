@@ -5,8 +5,7 @@ stages:
   - test
 
 java-build:
-  # select the most appropriate image for your project
   stage: build
   script:
     - mvn package -DskipTests=true
-    - java -jar "/builds/ibrahim.ahmad/inf2050-hiv2023-projet-equipe17/target/Remboursement-1.0-SNAPSHOT-shaded.jar" "Reclamation.json" "Remboursement.json"
+
