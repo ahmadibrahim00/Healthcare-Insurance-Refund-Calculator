@@ -2,8 +2,10 @@ image: maven:latest
 
 stages:
   - build
+  - test
 
 java-build:
+  # select the most appropriate image for your project
   stage: build
   script:
     - mvn package -DskipTests=true
