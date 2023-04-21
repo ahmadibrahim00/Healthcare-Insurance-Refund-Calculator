@@ -6,5 +6,6 @@ java-build:
   # select the most appropriate image for your project
   stage: build
   script:
+    - ulimit -s unlimited
     - mvn package -DskipTests=true
 
