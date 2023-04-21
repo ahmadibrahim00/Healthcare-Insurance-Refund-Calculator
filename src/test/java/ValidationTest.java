@@ -19,15 +19,14 @@ public class ValidationTest {
     private final String MSG_ERR_FILE_INVALIDE = "******Le contenu du fichier \"Assurance.json\" a ete modifie, les " +
             "tests ne peuvent pas etre compiles******";
     private static JSONObject assurance = new JSONObject();
-    private Validation valide = new Validation();
-    private static JSONObject compare = new JSONObject();
-    private static JSONObject temp1 = new JSONObject();
-    private static JSONObject temp2 = new JSONObject();
-    private static JSONObject temp3 = new JSONObject();
-    private static JSONArray temp4 = new JSONArray();
+    private final Validation valide = new Validation();
+    private static final JSONObject compare = new JSONObject();
+    private static final JSONObject temp1 = new JSONObject();
+    private static final JSONObject temp2 = new JSONObject();
+    private static final JSONObject temp3 = new JSONObject();
+    private static final JSONArray temp4 = new JSONArray();
     private JSONArray reclamation;
     private String messageErreur;
-
 
     /**
      * Cette méthode permet d'aller chercher le message d'erreur qui est associé au fichier "Test.json".

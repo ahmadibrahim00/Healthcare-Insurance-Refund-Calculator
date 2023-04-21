@@ -1,16 +1,18 @@
 import org.json.simple.parser.ParseException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-
+import java.io.FileNotFoundException;
 import java.io.IOException;
-
 import static org.junit.Assert.assertEquals;
-
 
 public class StatistiqueTest
 {
     Statistique stats = new Statistique();
     JSONHash a = new JSONHash("Assurance.json", "Test.json");
-
+    @AfterEach
+    public void remettreAZero() throws FileNotFoundException {
+        stats.executerOptionsStatistique("", "-SR");
+    }
     @Test
     public void testgetStatistiques() throws IOException, ParseException {
         stats.formaterFichierStatistiques();
