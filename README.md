@@ -1,4 +1,4 @@
-# Projet de session : Demande de changement #1
+# Projet de session : Demande de changement #2
 
 ## Technologies présentes :
 
@@ -77,3 +77,17 @@ java -jar "target\Remboursement.jar" "Reclamation.json" "Remboursement.json"
 projet, contenant soit un fichier contenant les montant à rembourser ou un message d'erreur. Il y aura aussi un fichier 
 nommé "Test.json" de créé lors de l'exécution des tests. Ce fichier peut être effacé, au besoin, toutefois, il sera créé
 après chaque commande d'exécution desa tests.
+
+### Statistiques
+
+À chaque fois que le programme est exécuté, le nombre de réclamations valides traités, le nombre de réclamations rejetés
+et le nombre de soins déclarés pour chaque type de soin est gardé comme statistiques, dans un fichier nommé : 
+Statistique.json. Pour afficher ces statistiques à la ligne de commande il suffit d'utiliser l'option `-S` lors de 
+l'exécution du programme. Par exemple : 
+```
+java -jar "target\Remboursement.jar" "Reclamation.json" "Remboursement.json" -S
+```
+Pour réinitialiser les statistiques il faut utiliser l'option `-SR` comme l'exemple précédent.
+
+Le message suivant sera afficher comme confirmation de la réinitialisation des statistiques :
+Les statistiques ont été réinitialisées.
