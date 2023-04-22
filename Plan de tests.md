@@ -17,9 +17,9 @@
 |                    EF - 003                    |               ST - 003               | Tester le mois de réclamation et les dates de soins                                |              9              |
 |                    EF - 004                    |               ST - 004               | Tester les numéros des soins                                                       |              3              |
 |                    EF - 005                    |               ST - 005               | Tester le montant entré                                                            |              5              |
-|                    EF - 008                    |               ST - 006               | Tester la validité des clés du fichier JSON d'entrée                               |              6              |
+|                    EF - 006                    |               ST - 006               | Tester la validité des clés du fichier JSON d'entrée                               |              6              |
 |                    EF - 007                    |               ST - 007               | Tester la création du fichier de statistique et de la compilation des statistiques |                             |
-|                    EF - 006                    |               ST - 008               | Tester le remboursement d'une réclamation selon la police                          |                             |
+|                    EF - 008                    |               ST - 008               | Tester le remboursement d'une réclamation selon la police                          |                             |
 
 
 
