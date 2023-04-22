@@ -1,0 +1,32 @@
+| Identifiants des exigences <br/>fonctionnelles | Description des exigences fonctionnelles                                    |
+|:----------------------------------------------:|:----------------------------------------------------------------------------|
+|                    EF - 001                    | Prendre un fichier JSON en entrée et un en sortie                           |
+|                    EF - 002                    | Avoir une matricule de dossier valide                                       |
+|                    EF - 003                    | Avoir des mois et dates valides                                             |
+|                    EF - 004                    | Avoir des numéros de soin valides                                           |
+|                    EF - 005                    | Avoir des montants valides                                                  |
+|                    EF - 006                    | Rembourser les réclamations selon la police                                 |
+|                    EF - 007                    | Créer un fichier statistique et compiler les statistiques des réclamations. |
+
+
+| Identifiants des exigences <br/>fonctionnelles | Identifiant des suites <br/>de tests | Description des suites de tests                                                     | Nombre de <br/>cas de tests |
+|:----------------------------------------------:|:------------------------------------:|:------------------------------------------------------------------------------------|:---------------------------:|
+|                    EF - 001                    |               ST - 001               | Tester le fichier d'entrée et le fichier de sortie                                  |              3              |
+|                    EF - 002                    |               ST - 002               | Tester la matricule du dossier                                                      |              4              |
+|                    EF - 003                    |               ST - 003               | Tester le mois de réclamation et les dates de soins                                 |                             |
+|                    EF - 004                    |               ST - 004               | Tester les numéros des soins                                                        |                             |
+|                    EF - 005                    |               ST - 005               | Tester le montant entré                                                             |                             |
+|                    EF - 006                    |               ST - 006               | Tester le remboursement D'une réclamation selon la police                           |                             |
+|                    EF - 007                    |               ST - 007               | Tester la création du fichier  de statistique et de la compilation des statistiques |                             |
+
+
+
+| Identifiant des <br/>suites de tests | Identifiant des <br/>cas de tests | Description des cas de tests                                                     |                                    Préconditions                                    |                                         Sortie attendue                                         | Priorité |
+|:------------------------------------:|:---------------------------------:|:---------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------:|:--------:|
+|               ST - 001               |             CT - 001              | Prendre un fichier qui n'est pas un fichier JSON en entrée                       |                    Le fichier d'entré n'est pas un fichier JSON                     |                   Erreur : " Le fichier d'entrée n'est pas un fichier JSON. "                   |  Haute   |
+|                                      |             CT - 002              | Prendre un fichier qui n'est pas un fichier JSON en sortie                       |                   Le fichier de sortie n'est pas un fichier JSON                    |                  Erreur : " Le fichier de sortie n'est pas un fichier JSON. "                   |  Haute   |
+|                                      |             CT - 003              | Prendre des fichiers d'entrée et de sortie en format JSON                        |          Le fichier d'entrée et le ficher de sortie sont des fichier JSON           |                               Les fichiers sont de format valide                                |  Haute   |
+|               ST - 002               |             CT - 004              | Avoir une lettre de dossier invalide (!= A, B, C, D ou E)                        |            La matricule du fichier ne commence pas avec A, B, C, D ou E             |     Erreur : " La matricule du dossier ne commence pas avec une lettre de contrat valide. "     |  Haute   |
+|                                      |             CT - 005              | Avoir une matricule ne contenant pas que des chiffres après la lettre du contrat | La matricule du fichier ne contient pas que des chiffres après la lettre du contrat | Erreur : " La matricule du dossier doit contenir que des chiffres après la lettre du contrat. " |  Haute   |
+|                                      |             CT - 006              | Avoir une matricule qui n'est pas de la bonne longueur (!= 7)                    |               La matricule du dossier n'Est pas de la bonne longueur                |                 Erreur : " La matricule du dossier n'a pas la bonne longueur. "                 |  Haute   |
+|                                      |             CT - 007              | Avoir une matricule qui est conforme au modèle                                   |                        La matricule du dossier est conforme                         |                                     La matricule est valide                                     | Moyenne  |
