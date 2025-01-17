@@ -1,93 +1,79 @@
-# Projet de session : Demande de changement #2
+# Healthcare Insurance Refund Calculator
 
-## Technologies présentes :
+**A backend application designed to process and calculate healthcare insurance claim refunds.**
 
-### Langage de programmation
+---
 
-Tout le code a été écrit avec le langage de programmation Java (JDK19).
+## 🎯 Project Overview
 
-### IDE
+This application validates and processes insurance claims, calculating refunds based on specific contract rules. It accepts JSON input files containing claim data and generates JSON output files with calculated refunds or error messages.
 
-Ce programme a été fait entièrement avec l'IDE IntelliJ IDEA 2022.3, et les instructions pour exécuter le programme sont 
-écrites en s'appuyant sur les menus et fonctionnalités de cet IDE.
+---
 
-### Gestion du projet
+## 🛠️ Technologies Used
 
-Ce programme utilise maven pour gérer les dépendances et le projet en tant que tel. On garantit que le projet fonctionne 
-avec maven 3.8.1 et les versions plus récentes. Donc, nous encourageons d'utiliser maven 3.8.1 ou une version plus 
-récente.
+- **Programming Language**: Java (JDK 11+)
+- **Development Environment**: IntelliJ IDEA
+- **Data Format**: JSON (UTF-8)
 
-## Pour exécuter le programme :
+---
 
-### Fichier d'entrée valide et tests
+## 🚀 Key Features
 
-Le fichier d'entrée, contenant les informations du client et des réclamations doivent respecter la structure du fichier 
-"Assurance.json" dans la racine du projet. S'il y a des champs manquants, que les données ne respectent pas les formats, 
-qu'il y a des données erronées ou que le fichier n'a pas l'extension ".json", le fichier de sortie contiendra un message 
-d'erreur significatif. Le fichier d'entrée peut contenir une ou plusieurs réclamations dans le champ "reclamations", 
-toutefois, ce champ ne peut pas être vide, sinon une erreur va être levée.
+1. **Input Validation**:
+   - Ensures client numbers are 6 digits.
+   - Verifies contracts are one of the allowed types: A, B, C, D.
+   - Checks claim dates are within the specified month (ISO 8601 format).
+   - Validates claim categories and monetary amounts.
 
-### Fichier d'entrée pour les tests
+2. **Refund Calculation**:
+   - Calculates refunds based on contract-specific rules for different claim categories.
+   - Supports four contract types (A, B, C, D) with varying refund percentages and caps.
 
-De plus, il est important d'avoir le fichier "Assurance.json" dans le root directory du projet, 
-et de ne pas toucher à son nom ou à son contenu, ce qui empêcherait de tester le programme avant de l'exécuter. Si le 
-fichier"Assurance.json" n'est pas dans le root directory du projet ou qu'il a été renommé, le projet ne peut pas être 
-construit, le message suivant s'affiche lors de l'appel de la classe ValidationTest :
+3. **Error Handling**:
+   - Produces a JSON error message for invalid input data.
+
+---
+
+## 📋 Input/Output Example
+
+### **Input File**:
+```json
+{
+    "client": "100323",
+    "contrat": "A",
+    "mois": "2022-01",
+    "reclamations": [
+        { "soin": 100, "date": "2022-01-11", "montant": "234.00$" },
+        { "soin": 200, "date": "2022-01-13", "montant": "90.00$" }
+    ]
+}
 ```
-[INFO] -------------------------------------------------------
-[INFO]  T E S T S
-[INFO] -------------------------------------------------------
-[INFO] Running ValidationTest
-******Le fichier "Assurance.json" n'est pas dans le root directory ou son nom a ete modifie******
+### **Output File**:
+```json
+{
+    "client": "100323",
+    "mois": "2022-01",
+    "remboursements": [
+        { "soin": 100, "date": "2022-01-11", "montant": "58.50$" },
+        { "soin": 200, "date": "2022-01-13", "montant": "22.50$" }
+    ]
+}
 ```
-et le code de sortie du programme est -1. Si le fichier "Assurance.json" est vide le message d'erreur est le suivant :
+---
+## 💻 Installation and Usage
+### 1. Clone the Repo :
+```bash
+git clone https://gitlab.info.uqam.ca/<your-repo-url>
+cd <project-directory>
 ```
-"******Le fichier "Assurance.json" est vide.******"
+### 2. Compile and Run : 
+```bash
+javac -d bin src/*.java
+java -jar Refund.jar inputfile.json outputfile.json
 ```
-et le code de sortie du programme est -2. Si le fichier "Assurance.json" n'a pas les mêmes données qu'il est censé 
-avoir, le message d'erreur est le suivant :
-```
-******Le contenu du fichier "Assurance.json" a ete modifie, les tests ne peuvent pas etre compiles************
-```
-et le code de sortie du programme est -3. Dans tous les cas, il faut ajouter le fichier "Assurance.json" au root 
-directory du projet, s'assurer qu'il n'a pas changé de nom ou que son contenu n'a pas été modifié.
 
-### Executer le projet avec la ligne de commande
-
-Les noms de répertoires, du fichier d'entrée et du fichier de sortie peuvent être différents, ils servent seulement 
-d'exemple pour montrer comment le projet doit être exécuté avec la ligne de commande.
-- Une fois le projet télécharger sur votre ordinateur, il faut se déplacer dans le root directory du projet.
+### 3. Error handling :
+```json
+{ "message": "Données invalides" }
 ```
-cd "C:\Users\monNom\projet"
-```
-- Ensuite, on entre les commandes suivantes successivement :
-```
-mvn clean
-```
-- Pour supprimer les fichiers créés par maven lors d'exécutions passées, pour pouvoir mettre les dépendances et le 
-projet à jour.
-```
-mvn package
-```
-- Pour build le projet, donc compiler les fichiers .java, exécuter les tests, créer Remboursement.jar, etc. 
-```
-java -jar "target\Remboursement.jar" "Reclamation.json" "Remboursement.json"
-```
-- Puis finalement on exécute le programme et un fichier "Remboursement.json" est créé et placé dans le root directory du 
-projet, contenant soit un fichier contenant les montant à rembourser ou un message d'erreur. Il y aura aussi un fichier 
-nommé "Test.json" de créé lors de l'exécution des tests. Ce fichier peut être effacé, au besoin, toutefois, il sera créé
-après chaque commande d'exécution desa tests.
-
-### Statistiques
-
-À chaque fois que le programme est exécuté, le nombre de réclamations valides traités, le nombre de réclamations rejetés
-et le nombre de soins déclarés pour chaque type de soin est gardé comme statistiques, dans un fichier nommé : 
-Statistique.json. Pour afficher ces statistiques à la ligne de commande il suffit d'utiliser l'option `-S` lors de 
-l'exécution du programme. Par exemple : 
-```
-java -jar "target\Remboursement.jar" "Reclamation.json" "Remboursement.json" -S
-```
-Pour réinitialiser les statistiques il faut utiliser l'option `-SR` comme l'exemple précédent.
-
-Le message suivant sera afficher comme confirmation de la réinitialisation des statistiques :
-Les statistiques ont été réinitialisées.
